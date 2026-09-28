@@ -1,16 +1,15 @@
-# React + Vite
+Nombre del Equipo: DataLogic
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Integrantes: Felipe Droguett, Felipe Perez, Benjamin Venegas
 
-Currently, two official plugins are available:
+Caso: La Veterinaria San Marcos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+Descripción del caso: La Veterinaria San Marcos es una clínica en Rancagua que atiende principalmente perros y gatos, y que actualmente gestiona sus citas y fichas clínicas de forma manual en papel, lo que ha provocado pérdida de fichas, un 20% de inasistencias y la ausencia de un historial digital de vacunación. La aplicación web resuelve esta problemática digitalizando el agendamiento de citas, las fichas clínicas, el historial de vacunación y el inventario de medicamentos. Además, permite a los dueños solicitar y consultar sus citas en línea, mientras la clínica mejora su eficiencia operativa y genera reportes sin depender de archivadores físicos 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Estructura del proyecto: el árbol de carpetas de src organizado por Atomic Design (atoms, molecules, organisms, templates, pages).
 
-## Expanding the Oxlint configuration
+Tecnologías utilizadas: React, Vite, React Bootstrap 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Cómo ejecutar el proyecto: los comandos exactos, por ejemplo npm install y npm run dev 
+
