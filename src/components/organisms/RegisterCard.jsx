@@ -9,7 +9,7 @@ function RegisterCard({ onSubmit }) {
                 <p className="text-center text-muted mb-4">
                     Registrate usando tu nombre y correo
                 </p>
-                <LoginForm onSubmit={onSubmit} />
+                <RegisterForm onSubmit={onSubmit} />
             </Card.Body>
         </Card>
     );

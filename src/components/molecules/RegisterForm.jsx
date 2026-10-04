@@ -20,7 +20,7 @@ function RegisterForm({ onSubmit }) {
             <InputField
                 controlId="formNombre"
                 label="NombreCompleto"
-                type="nombre"
+                type="text"
                 placeholder="Ingrese su Nombre Completo"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
