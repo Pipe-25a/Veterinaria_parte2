@@ -4,7 +4,7 @@ import InputField from '../atoms/InputField';
 import SubmitButton from '../atoms/SubmitButton';
 
 
-function RegisterForm({ onSubmit }) {
+function RegisterForm({ onSubmit, loading }) {
 
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ function RegisterForm({ onSubmit }) {
         <Form onSubmit={handleSubmit}>
             <InputField
                 controlId="formNombre"
-                label="NombreCompleto"
+                label="Nombre Completo"
                 type="text"
                 placeholder="Ingrese su Nombre Completo"
                 value={nombre}
@@ -41,7 +41,9 @@ function RegisterForm({ onSubmit }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <SubmitButton>Iniciar sesión</SubmitButton>
+            <SubmitButton disabled={loading}>
+                {loading ? 'Registrando Usuario...' : 'Registrarse'}
+            </SubmitButton>
         </Form>
     );
 }

@@ -1,33 +1,36 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage'
-import './App.css'
+import RegisterPage from './pages/RegisterPage';
+import './App.css';
 
 function App() {
-  // Estado global del usuario autenticado
-  const [user, setUser] = useState(null);
+  // 👇 Inicializa el user desde localStorage si existe
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('user');
+    return saved ? JSON.parse(saved) : null;
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Estado para controlar qué vista mostrar: 'login' o 'register'
-  const [view, setView] = useState('login');
+  const navigate = useNavigate();
 
-  // Función que se ejecuta al enviar el formulario de login
+  // Login
   const handleLogin = async ({ email, password }) => {
     setError('');
     setLoading(true);
-
     try {
-      // Validación básica
       if (!email || !password) {
         throw new Error('Debes completar todos los campos');
       }
 
-      // Simulación de llamada a API
       await new Promise((r) => setTimeout(r, 800));
 
       if (email === 'admin@test.com' && password === '123456') {
-        setUser({ email, name: 'Admin' });
+        const loggedUser = { email, name: 'Admin' };
+        setUser(loggedUser);
+        localStorage.setItem('user', JSON.stringify(loggedUser)); // 👈 guarda
+        navigate('/');
       } else {
         throw new Error('Credenciales inválidas');
       }
@@ -38,33 +41,21 @@ function App() {
     }
   };
 
-  // Función que se ejecuta al enviar el formulario de registro
+  // Registro
   const handleRegister = async ({ nombre, email, password }) => {
     setError('');
     setLoading(true);
-
     try {
-      // Validación básica
       if (!nombre || !email || !password) {
         throw new Error('Debes completar todos los campos');
       }
 
-      // Simulación de llamada a API (reemplaza por tu fetch real)
-      // const res = await fetch('/api/register', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ nombre, email, password }),
-      // });
-      // if (!res.ok) throw new Error('Error al registrar usuario');
-      // const data = await res.json();
-
-      // Simulación:
       await new Promise((r) => setTimeout(r, 800));
 
-      // Aquí normalmente registrarías al usuario y luego lo loguearías
-      // o lo redirigirías al login. Simulamos autologueo:
-      setUser({ email, name: nombre });
-
+      const newUser = { email, name: nombre };
+      setUser(newUser);
+      localStorage.setItem('user', JSON.stringify(newUser)); // 👈 guarda
+      navigate('/');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -72,57 +63,70 @@ function App() {
     }
   };
 
-  // Función para cerrar sesión
+  // Logout
   const handleLogout = () => {
     setUser(null);
     setError('');
-    setView('login');
+    localStorage.removeItem('user'); // 👈 borra
+    navigate('/login');
   };
 
-  // Función para cambiar entre login y registro
-  const goToRegister = () => {
-    setError('');
-    setView('register');
-  };
-
-  const goToLogin = () => {
-    setError('');
-    setView('login');
-  };
-
-  // Render condicional: si hay usuario, muestra home
-  if (user) {
-    return (
-      <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-        <h1>Bienvenido, {user.name} 👋</h1>
-        <p className="text-muted">{user.email}</p>
-        <button className="btn btn-danger" onClick={handleLogout}>
-          Cerrar sesión
-        </button>
-      </div>
-    );
-  }
-
-  // Si no hay usuario, mostramos login o registro según el estado 'view'
   return (
-    <>
-      {view === 'login' ? (
-        <LoginPage
-          onSubmit={handleLogin}
-          error={error}
-          loading={loading}
-          onGoToRegister={goToRegister}
-        />
-      ) : (
-        <RegisterPage
-          onSubmit={handleRegister}
-          error={error}
-          loading={loading}
-          onGoToLogin={goToLogin}
-        />
-      )}
-    </>
+    <Routes>
+      {/* Ruta protegida: home solo si hay usuario */}
+      <Route
+        path="/"
+        element={
+          user ? (
+            <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
+              <h1>Bienvenido, {user.name} 👋</h1>
+              <p className="text-muted">{user.email}</p>
+              <button className="btn btn-danger" onClick={handleLogout}>
+                Cerrar sesión
+              </button>
+            </div>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
+      {/* Login */}
+      <Route
+        path="/login"
+        element={
+          user ? (
+            <Navigate to="/" replace />
+          ) : (
+            <LoginPage
+              onSubmit={handleLogin}
+              error={error}
+              loading={loading}
+            />
+          )
+        }
+      />
+
+      {/* Register */}
+      <Route
+        path="/register"
+        element={
+          user ? (
+            <Navigate to="/" replace />
+          ) : (
+            <RegisterPage
+              onSubmit={handleRegister}
+              error={error}
+              loading={loading}
+            />
+          )
+        }
+      />
+
+      {/* Cualquier ruta desconocida → login */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   );
 }
 
-export default App
+export default App;
