@@ -3,17 +3,28 @@ import { Form } from 'react-bootstrap';
 import InputField from '../atoms/InputField';
 import SubmitButton from '../atoms/SubmitButton';
 
-function LoginForm({ onSubmit, loading }) {
+
+function RegisterForm({ onSubmit, loading }) {
+
+    const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit?.({ email, password });
+        onSubmit?.({ nombre,email, password });
     };
 
     return (
         <Form onSubmit={handleSubmit}>
+            <InputField
+                controlId="formNombre"
+                label="Nombre Completo"
+                type="text"
+                placeholder="Ingrese su Nombre Completo"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+            />
             <InputField
                 controlId="formEmail"
                 label="Correo electrónico"
@@ -31,10 +42,10 @@ function LoginForm({ onSubmit, loading }) {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <SubmitButton disabled={loading}>
-                {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                {loading ? 'Registrando Usuario...' : 'Registrarse'}
             </SubmitButton>
         </Form>
     );
 }
 
-export default LoginForm
+export default RegisterForm
