@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import AppointmentsPage from './pages/AppointmentsPage';
 import './App.css';
 
 function App() {
@@ -87,6 +88,18 @@ function App() {
                 Cerrar sesión
               </button>
             </div>
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
+      {/* Ruta protegida: citas solo si hay usuario */}
+      <Route
+        path="/citas"
+        element={
+          user ? (
+            <AppointmentsPage user={user} handleLogout={handleLogout} />
           ) : (
             <Navigate to="/login" replace />
           )

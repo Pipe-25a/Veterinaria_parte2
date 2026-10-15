@@ -2,3 +2,5 @@
 function Text({ children, variant }) {
   return <p className={`text ${variant ?? ""}`}>{children}</p>;
 }
+
+export default Text;

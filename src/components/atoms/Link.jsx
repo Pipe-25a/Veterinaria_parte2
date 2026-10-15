@@ -4,3 +4,5 @@ function Link({ to, children, variant = "nav" }) {
   return <RouterLink to={to} className={`link link--${variant}`}>{children}</RouterLink>;
 }
 
+export default Link;
+
