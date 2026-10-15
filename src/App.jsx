@@ -1,36 +1,38 @@
-import { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { useState } from 'react'
 import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import './App.css';
+import './App.css'
 
 function App() {
-  // 👇 Inicializa el user desde localStorage si existe
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('user');
-    return saved ? JSON.parse(saved) : null;
-  });
+  // Estado global del usuario autenticado
+  const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
-  // Login
+  // Función que se ejecuta al enviar el formulario de login
   const handleLogin = async ({ email, password }) => {
     setError('');
     setLoading(true);
+
     try {
+      //  Validación básica
       if (!email || !password) {
         throw new Error('Debes completar todos los campos');
       }
 
+      //  Simulación de llamada a API (reemplaza por tu fetch real)
+      // const res = await fetch('/api/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, password }),
+      // });
+      // if (!res.ok) throw new Error('Credenciales inválidas');
+      // const data = await res.json();
+
+      // Simulación:
       await new Promise((r) => setTimeout(r, 800));
 
       if (email === 'admin@test.com' && password === '123456') {
-        const loggedUser = { email, name: 'Admin' };
-        setUser(loggedUser);
-        localStorage.setItem('user', JSON.stringify(loggedUser)); // 👈 guarda
-        navigate('/');
+        setUser({ email, name: 'Admin' });
       } else {
         throw new Error('Credenciales inválidas');
       }
@@ -41,92 +43,32 @@ function App() {
     }
   };
 
-  // Registro
-  const handleRegister = async ({ nombre, email, password }) => {
-    setError('');
-    setLoading(true);
-    try {
-      if (!nombre || !email || !password) {
-        throw new Error('Debes completar todos los campos');
-      }
-
-      await new Promise((r) => setTimeout(r, 800));
-
-      const newUser = { email, name: nombre };
-      setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser)); // 👈 guarda
-      navigate('/');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Logout
+  // Función para cerrar sesión
   const handleLogout = () => {
     setUser(null);
     setError('');
-    localStorage.removeItem('user'); // 👈 borra
-    navigate('/login');
   };
 
+  //  Render condicional: si hay usuario, muestra home; si no, muestra login
+  if (user) {
+    return (
+      <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
+        <h1>Bienvenido, {user.name} 👋</h1>
+        <p className="text-muted">{user.email}</p>
+        <button className="btn btn-danger" onClick={handleLogout}>
+          Cerrar sesión
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <Routes>
-      {/* Ruta protegida: home solo si hay usuario */}
-      <Route
-        path="/"
-        element={
-          user ? (
-            <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-              <h1>Bienvenido, {user.name} 👋</h1>
-              <p className="text-muted">{user.email}</p>
-              <button className="btn btn-danger" onClick={handleLogout}>
-                Cerrar sesión
-              </button>
-            </div>
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      />
-
-      {/* Login */}
-      <Route
-        path="/login"
-        element={
-          user ? (
-            <Navigate to="/" replace />
-          ) : (
-            <LoginPage
-              onSubmit={handleLogin}
-              error={error}
-              loading={loading}
-            />
-          )
-        }
-      />
-
-      {/* Register */}
-      <Route
-        path="/register"
-        element={
-          user ? (
-            <Navigate to="/" replace />
-          ) : (
-            <RegisterPage
-              onSubmit={handleRegister}
-              error={error}
-              loading={loading}
-            />
-          )
-        }
-      />
-
-      {/* Cualquier ruta desconocida → login */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
+    <LoginPage
+      onSubmit={handleLogin}
+      error={error}
+      loading={loading}
+    />
   );
 }
 
-export default App;
+export default App

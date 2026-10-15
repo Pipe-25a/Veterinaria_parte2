@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import InputField from '../atoms/InputField';
 import SubmitButton from '../atoms/SubmitButton';
 
-function LoginForm({ onSubmit, loading }) {
+function LoginForm({ onSubmit }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -30,9 +30,7 @@ function LoginForm({ onSubmit, loading }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <SubmitButton disabled={loading}>
-                {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-            </SubmitButton>
+            <SubmitButton>Iniciar sesión</SubmitButton>
         </Form>
     );
 }
