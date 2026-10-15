@@ -18,6 +18,7 @@ function LoginPage() {
       <LoginForm onSubmit={handleLogin} />
     </AuthTemplate>
   );
+
 }
 
-export default LoginPage;
+export default LoginPage
