@@ -1,38 +1,38 @@
-import { useState } from 'react';
-import { Form } from 'react-bootstrap';
-import InputField from '../atoms/InputField';
-import SubmitButton from '../atoms/SubmitButton';
+import { useState } from "react";
+import FormField from "../molecules/FormField";
+import Button from "../atoms/Button";
 
-function LoginForm({ onSubmit }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+export default function LoginForm({ onSubmit, error, loading }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit?.({ email, password });
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(email, password);
+  };
 
-    return (
-        <Form onSubmit={handleSubmit}>
-            <InputField
-                controlId="formEmail"
-                label="Correo electrónico"
-                type="email"
-                placeholder="Ingrese su Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <InputField
-                controlId="formPassword"
-                label="Contraseña"
-                type="password"
-                placeholder="Ingrese su contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <SubmitButton>Iniciar sesión</SubmitButton>
-        </Form>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <FormField
+        id="email"
+        label="Correo"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <FormField
+        id="password"
+        label="Contraseña"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+      {error && <p role="alert">{error}</p>}
+      <Button type="submit" disabled={loading}>
+        {loading ? "Ingresando..." : "Ingresar"}
+      </Button>
+    </form>
+  );
 }
-
-export default LoginForm

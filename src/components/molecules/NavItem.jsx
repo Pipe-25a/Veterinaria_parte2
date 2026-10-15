@@ -1,16 +1,5 @@
-//esto es pa la barra de navegacion
-import React from 'react';
-import Link from "../atoms/Link";
+import { Link } from "react-router-dom";
 
-//funcion para la barra de navegacion
-function NavItem({ to, children }) {
-  return (
-    //esto es para la barra de navegacion
-    <li>
-      <Link to={to}>
-        {children}
-      </Link>
-    </li>
-  );
+export default function NavItem({ to, children }) {
+  return <Link to={to}>{children}</Link>;
 }
-export default NavItem;
