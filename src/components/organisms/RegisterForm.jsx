@@ -3,23 +3,14 @@ import FormField from '../molecules/FormField';
 import SubmitButton from '../atoms/SubmitButton';
 
 function RegisterForm({ onSubmit, error, loading }) {
-    const [formData, setFormData] = useState({
-        nombre: '',
-        email: '',
-        password: '',
-    });
-
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
-    };
+    const [nombre, setNombre] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit?.(formData);
+        e.preventDefault(); // Evita recargar la página
+        //  Importante: Las claves del objeto deben llamarse nombre, email y password
+        onSubmit({ nombre, email, password });
     };
 
     return (
@@ -28,33 +19,32 @@ function RegisterForm({ onSubmit, error, loading }) {
 
             <FormField
                 id="nombre"
-                label="Nombre completo"
+                label="Nombre Completo"
                 type="text"
-                placeholder="Ingrese su nombre completo"
-                value={formData.nombre}
-                onChange={handleChange}
+                placeholder="Ej: Juan Pérez"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
             />
 
             <FormField
                 id="email"
                 label="Correo electrónico"
                 type="email"
-                placeholder="Ingrese su correo"
-                value={formData.email}
-                onChange={handleChange}
+                placeholder="ejemplo@correo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
 
             <FormField
                 id="password"
                 label="Contraseña"
                 type="password"
-                placeholder="Ingrese su contraseña"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
             />
 
             <SubmitButton disabled={loading}>
-                {loading ? 'Registrando Usuario...' : 'Registrarse'}
+                {loading ? 'Registrando...' : 'Crear Cuenta'}
             </SubmitButton>
         </form>
     );

@@ -1,24 +1,19 @@
-// src/pages/LoginPage.jsx
 import AuthTemplate from '../components/templates/AuthTemplate';
 import LoginForm from '../components/organisms/LoginForm';
 
-function LoginPage() {
-  const handleLogin = (credentials) => {
-    console.log('Enviando credenciales:', credentials);
-    // Lógica para autenticar con backend
-  };
-
+function LoginPage({ onSubmit, error, loading }) {
   return (
     <AuthTemplate
       title="Bienvenido"
       subtitle="Ingresa tus credenciales para continuar"
       footerLinkText="¿No tienes cuenta?"
+      footerLinkLabel="Regístrate"
       footerLinkTo="/register"
     >
-      <LoginForm onSubmit={handleLogin} />
+      {/* ⚠️ Aquí debes pasarle onSubmit, error y loading al Organismo */}
+      <LoginForm onSubmit={onSubmit} error={error} loading={loading} />
     </AuthTemplate>
   );
-
 }
 
 export default LoginPage;
