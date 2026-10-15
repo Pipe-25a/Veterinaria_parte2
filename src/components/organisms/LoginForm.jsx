@@ -1,38 +1,37 @@
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
-import InputField from '../atoms/InputField';
+import FormField from '../molecules/FormField';
 import SubmitButton from '../atoms/SubmitButton';
 
-function LoginForm({ onSubmit }) {
+function LoginForm({ onSubmit, loading }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit?.({ email, password });
+        e.preventDefault(); // Importante: evita que la página se recargue
+        onSubmit({ email, password }); // Llama a la prop onSubmit pasándole el objeto
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <InputField
-                controlId="formEmail"
+        <form onSubmit={handleSubmit}>
+            <FormField
+                id="email"
                 label="Correo electrónico"
                 type="email"
-                placeholder="Ingrese su Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <InputField
-                controlId="formPassword"
+            <FormField
+                id="password"
                 label="Contraseña"
                 type="password"
-                placeholder="Ingrese su contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <SubmitButton>Iniciar sesión</SubmitButton>
-        </Form>
+            <SubmitButton disabled={loading}>
+                {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+            </SubmitButton>
+        </form>
     );
 }
 
-export default LoginForm
+export default LoginForm;
