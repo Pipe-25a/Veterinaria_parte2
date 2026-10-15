@@ -20,3 +20,5 @@ Enlace Drive:
 
 https://drive.google.com/drive/folders/1bQMZCoULri2liXQnUvDPBbBA5K7PP70d?usp=drive_link
 
+Bitacora de trabajo:
+se creo la rama de desarollo para hacer pruebas de funcionamiento, objetivo fuccionar 2 ramas y probar su funcionamiento si affectar el main
