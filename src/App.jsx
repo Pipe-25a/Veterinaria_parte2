@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import './App.css';
 
 function App() {
-  // 👇 Inicializa el user desde localStorage si existe
+  //  Inicializa el user desde localStorage si existe
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('user');
     return saved ? JSON.parse(saved) : null;
@@ -14,6 +14,8 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const clearError = () => setError('');
 
   // Login
   const handleLogin = async ({ email, password }) => {
@@ -29,7 +31,7 @@ function App() {
       if (email === 'admin@test.com' && password === '123456') {
         const loggedUser = { email, name: 'Admin' };
         setUser(loggedUser);
-        localStorage.setItem('user', JSON.stringify(loggedUser)); // 👈 guarda
+        localStorage.setItem('user', JSON.stringify(loggedUser)); //  guarda
         navigate('/');
       } else {
         throw new Error('Credenciales inválidas');
@@ -54,7 +56,7 @@ function App() {
 
       const newUser = { email, name: nombre };
       setUser(newUser);
-      localStorage.setItem('user', JSON.stringify(newUser)); // 👈 guarda
+      localStorage.setItem('user', JSON.stringify(newUser)); //  guarda
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -67,7 +69,7 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     setError('');
-    localStorage.removeItem('user'); // 👈 borra
+    localStorage.removeItem('user'); //  borra
     navigate('/login');
   };
 
@@ -79,7 +81,7 @@ function App() {
         element={
           user ? (
             <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-              <h1>Bienvenido, {user.name} 👋</h1>
+              <h1>Bienvenido, {user.name} </h1>
               <p className="text-muted">{user.email}</p>
               <button className="btn btn-danger" onClick={handleLogout}>
                 Cerrar sesión

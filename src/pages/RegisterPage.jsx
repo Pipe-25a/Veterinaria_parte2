@@ -1,21 +1,22 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import RegisterCard from '../components/organisms/RegisterCard'; 
+// src/pages/RegisterPage.jsx
+import AuthTemplate from '../components/templates/AuthTemplate';
+import RegisterForm from '../components/organisms/RegisterForm';
 
-function RegisterPage({ onSubmit, error, loading }) {
+function RegisterPage() {
+  const handleRegister = (data) => {
+    console.log('Datos de registro:', data);
+    // Lógica para registrar usuario con backend
+  };
+
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center bg-light">
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={12} md={8} lg={5}>
-            <RegisterCard
-              onSubmit={onSubmit}
-              error={error}
-              loading={loading}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </Container>
+    <AuthTemplate
+      title="Registro Clínica San Marcos"
+      subtitle="Regístrate usando tu nombre y correo"
+      footerLinkText="¿Ya tienes cuenta?"
+      footerLinkTo="/login"
+    >
+      <RegisterForm onSubmit={handleRegister} />
+    </AuthTemplate>
   );
 }
 

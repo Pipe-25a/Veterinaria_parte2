@@ -1,21 +1,22 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import AppointmentCard from '../components/organisms/AppointmentCard';
+import AuthTemplate from '../components/templates/AuthTemplate';
+import AppointmentForm from '../components/organisms/AppointmentForm';
 
-function AppointmentPage({ onSubmit, error, loading }) {
+function AppointmentPage() {
+    const handleAppointmentSubmit = (data) => {
+        console.log('Cita agendada:', data);
+        // Lógica para enviar a la API
+    };
+
     return (
-        <Container fluid className="min-vh-100 d-flex align-items-center bg-light">
-            <Container>
-                <Row className="justify-content-center">
-                    <Col xs={12} md={8} lg={5}>
-                        <AppointmentCard
-                            onSubmit={onSubmit}
-                            error={error}
-                            loading={loading}
-                        />
-                    </Col>
-                </Row>
-            </Container>
-        </Container>
+        <AuthTemplate
+            title="Agende su cita"
+            subtitle="Ingrese los datos solicitados"
+            footerLinkText="¿Quieres regresar al inicio?"
+            footerLinkLabel="Ir al Home"
+            footerLinkTo="/"
+        >
+            <AppointmentForm onSubmit={handleAppointmentSubmit} />
+        </AuthTemplate>
     );
 }
 

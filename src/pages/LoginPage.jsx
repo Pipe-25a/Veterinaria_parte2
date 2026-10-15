@@ -1,21 +1,22 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import LoginCard from '../components/organisms/LoginCard';
+// src/pages/LoginPage.jsx
+import AuthTemplate from '../components/templates/AuthTemplate';
+import LoginForm from '../components/organisms/LoginForm';
 
-function LoginPage({ onSubmit, error, loading }) {
+function LoginPage() {
+  const handleLogin = (credentials) => {
+    console.log('Enviando credenciales:', credentials);
+    // Lógica para autenticar con backend
+  };
+
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center bg-light">
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={12} md={8} lg={5}>
-            <LoginCard
-              onSubmit={onSubmit}
-              error={error}
-              loading={loading}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </Container>
+    <AuthTemplate
+      title="Bienvenido"
+      subtitle="Ingresa tus credenciales para continuar"
+      footerLinkText="¿No tienes cuenta?"
+      footerLinkTo="/register"
+    >
+      <LoginForm onSubmit={handleLogin} />
+    </AuthTemplate>
   );
 }
 
