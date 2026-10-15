@@ -6,15 +6,11 @@ import Link from "../atoms/Link";
 function NavItem({ to, children }) {
   return (
     //esto es para la barra de navegacion
-    <nav>
-      <ul>
-        <NavItem to="/">Inicio</NavItem>
-        <NavItem to="/servicios">Servicios</NavItem>
-        <NavItem to="#contacto">Contacto</NavItem>
-        <NavItem to="/login">Iniciar sesión</NavItem>
-        
-      </ul>
-    </nav>
-    );
+    <li>
+      <Link to={to}>
+        {children}
+      </Link>
+    </li>
+  );
 }
 export default NavItem;
