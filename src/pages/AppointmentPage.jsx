@@ -1,21 +1,31 @@
+// src/pages/AppointmentPage.jsx
 import AuthTemplate from '../components/templates/AuthTemplate';
 import AppointmentForm from '../components/organisms/AppointmentForm';
 
-function AppointmentPage() {
-    const handleAppointmentSubmit = (data) => {
-        console.log('Cita agendada:', data);
-        // Lógica para enviar a la API
-    };
-
+function AppointmentPage({ user, onSubmit, error, loading, onLogout }) {
     return (
         <AuthTemplate
-            title="Agende su cita"
-            subtitle="Ingrese los datos solicitados"
-            footerLinkText="¿Quieres regresar al inicio?"
-            footerLinkLabel="Ir al Home"
-            footerLinkTo="/"
+            title={`Bienvenido/a ${user?.name || ''}`}
+            subtitle="Ingrese los datos para agendar su cita"
         >
-            <AppointmentForm onSubmit={handleAppointmentSubmit} />
+            <AppointmentForm
+                onSubmit={onSubmit}
+                error={error}
+                loading={loading}
+            />
+
+            {/* Botón funcional de Cerrar Sesión */}
+            {onLogout && (
+                <div className="text-center mt-3">
+                    <button
+                        type="button"
+                        className="btn btn-link text-danger btn-sm text-decoration-none fw-bold"
+                        onClick={onLogout}
+                    >
+                        Cerrar sesión
+                    </button>
+                </div>
+            )}
         </AuthTemplate>
     );
 }

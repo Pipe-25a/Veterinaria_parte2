@@ -1,78 +1,70 @@
 import { useState } from 'react';
 import FormField from '../molecules/FormField';
-import SubmitButton from '../atoms/SubmitButton'; // O tu átomo de botón
+import SubmitButton from '../atoms/SubmitButton';
+import { validationAppointment } from '../../utils/validationAppointment';
 
-function AppointmentForm({ onSubmit, error, loading, services = [] }) {
-    const [formData, setFormData] = useState({
-        petName: '',
-        species: 'perro',
-        serviceId: '',
-        date: '',
-        time: ''
-    });
-
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [id]: value
-        }));
-    };
+function AppointmentForm({ onSubmit, error: apiError, loading }) {
+    const [petName, setPetName] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const [service, setService] = useState('');
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit?.(formData);
+        const { errors: newErrors, isValid } = validationAppointment({
+            petName,
+            date,
+            time,
+            service,
+        });
+
+        setErrors(newErrors);
+
+        if (isValid) {
+            onSubmit({ petName, date, time, service });
+        }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {error && <div className="alert alert-danger mb-3">{error}</div>}
+            {apiError && <div className="alert alert-danger mb-3">{apiError}</div>}
 
             <FormField
                 id="petName"
-                label="Nombre de la Mascota"
+                label="Nombre de la mascota"
+                type="text"
                 placeholder="Ej: Bucky"
-                value={formData.petName}
-                onChange={handleChange}
+                value={petName}
+                onChange={(e) => {
+                    setPetName(e.target.value);
+                    if (errors.petName) setErrors((prev) => ({ ...prev, petName: '' }));
+                }}
+                error={errors.petName}
             />
-
-            <FormField
-                id="species"
-                label="Especie"
-                options={[
-                    { value: 'perro', label: 'Perro' },
-                    { value: 'gato', label: 'Gato' },
-                    { value: 'otro', label: 'Otro' }
-                ]}
-                value={formData.species}
-                onChange={handleChange}
-            />
-
-            {services.length > 0 && (
-                <FormField
-                    id="serviceId"
-                    label="Servicio"
-                    options={services.map((s) => ({ value: s.id, label: s.name }))}
-                    placeholder="Seleccione un servicio"
-                    value={formData.serviceId}
-                    onChange={handleChange}
-                />
-            )}
 
             <FormField
                 id="date"
-                label="Fecha de la Cita"
+                label="Fecha de la cita"
                 type="date"
-                value={formData.date}
-                onChange={handleChange}
+                value={date}
+                onChange={(e) => {
+                    setDate(e.target.value);
+                    if (errors.date) setErrors((prev) => ({ ...prev, date: '' }));
+                }}
+                error={errors.date}
             />
 
             <FormField
                 id="time"
-                label="Hora de la Cita"
+                label="Hora de la cita"
                 type="time"
-                value={formData.time}
-                onChange={handleChange}
+                value={time}
+                onChange={(e) => {
+                    setTime(e.target.value);
+                    if (errors.time) setErrors((prev) => ({ ...prev, time: '' }));
+                }}
+                error={errors.time}
             />
 
             <SubmitButton disabled={loading}>
