@@ -1,13 +1,22 @@
-//Esto es un componente de React que representa una insignia (badge) que muestra el estado de algo, como una tarea o un pedido. El componente recibe una propiedad llamada `estado`, que determina el color de la insignia según un conjunto predefinido de colores asociados a diferentes estados.
-const COLORES = {
-  pendiente: 'warning',
-  confirmada: 'success',
-  cancelada: 'danger',
-  atendida: 'secondary',
-};
+// Átomo: etiqueta pequeña para mostrar un estado o categoría.
+// Cada "tone" se traduce a una clase de color de Bootstrap.
+const TONES = {
+  neutral: 'text-bg-secondary',
+  brand: 'text-bg-primary',
+  success: 'text-bg-success',
+  warning: 'text-bg-warning',
+  danger: 'text-bg-danger',
+  info: 'text-bg-info',
+}
 
-const Badge = ({ estado }) => (
-  <span className={`badge text-bg-${COLORES[estado] ?? 'light'}`}>{estado}</span>
-);
+export function Badge(props) {
+  const tone = props.tone ?? 'neutral'
+  const pill = props.pill ?? false
+  const className = props.className ?? ''
 
-export default Badge;
+  const classes = ['badge', TONES[tone], pill && 'rounded-pill', className]
+    .filter(Boolean)
+    .join(' ')
+
+  return <span className={classes}>{props.children}</span>
+}

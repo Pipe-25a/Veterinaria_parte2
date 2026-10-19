@@ -5,7 +5,7 @@ import CitaCard from '../../components/molecules/CitaCard';
 
 const MisCitas = () => {
   const { user } = useAuth();
-  const citas = getCitasByDueno(user.correo);
+  const citas = getCitasByDueno(user.email);
 
   return (
     <>

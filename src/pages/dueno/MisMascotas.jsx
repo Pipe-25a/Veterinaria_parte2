@@ -1,14 +1,18 @@
 import { useAuth } from '../../context/AuthContext';
 import { getMascotasByDueno } from '../../services/mascotaService';
 import MascotaCard from '../../components/molecules/MascotaCard';
+import { Link } from 'react-router-dom'
 
 const MisMascotas = () => {
   const { user } = useAuth();
-  const mascotas = getMascotasByDueno(user.correo);
+  const mascotas = getMascotasByDueno(user.email);
 
   return (
     <>
-      <h2 className="mb-4">Mis mascotas</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">Mis mascotas</h2>
+      <Link to="/dueno/mascotas/nueva" className="btn btn-primary">Agregar mascota</Link>
+    </div>
       {mascotas.length === 0 ? (
         <p className="text-muted">Aún no tienes mascotas registradas.</p>
       ) : (

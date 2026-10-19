@@ -6,7 +6,8 @@ import AgendarCita from './AgendarCita';
 
 const LINKS = [
   { to: '/dueno', label: 'Mis citas', end: true },
-  { to: '/dueno/mascotas', label: 'Mis mascotas' },
+  { to: '/dueno/mascotas', label: 'Mis mascotas', end: true },
+  { to: '/dueno/mascotas/nueva', label: 'Agregar mascota' },
   { to: '/dueno/citas/nueva', label: 'Agendar cita' },
 ];
 
@@ -20,6 +21,7 @@ const DuenoDashboard = () => (
         <Routes>
           <Route index element={<MisCitas />} />
           <Route path="mascotas" element={<MisMascotas />} />
+          <Route path="mascotas/nueva" element={<AgregarMascota />} />
           <Route path="citas/nueva" element={<AgendarCita />} />
           <Route path="*" element={<Navigate to="/dueno" replace />} />
         </Routes>

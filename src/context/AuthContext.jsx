@@ -3,7 +3,6 @@ import { findUser, registerUser } from "../services/userService";
 
 const AuthContext = createContext(null);
 
-// Lee la sesión guardada; si el localStorage está corrupto devuelve null
 const loadSession = () => {
   try {
     return JSON.parse(localStorage.getItem("user"));

@@ -1,1 +1,0 @@
-export const ESPECIES = ["Perro", "Gato", "Ave", "Conejo", "Otro"];
