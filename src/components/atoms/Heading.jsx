@@ -1,8 +1,3 @@
-function Heading({ level = 2, children, variant }) {
-  const Tag = `h${level}`;
-  return <Tag className={`heading ${variant ?? ""}`}>{children}</Tag>;
-}
-/*
 // Átomo: título. "level" define la etiqueta (1 a 6).
 const ALIGNS = {
   center: 'text-center',
@@ -19,4 +14,4 @@ export function Heading(props) {
 
   return <Tag className={classes}>{props.children}</Tag>
 }
-*/
+
