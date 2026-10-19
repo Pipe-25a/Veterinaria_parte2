@@ -1,19 +1,22 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+//card reutilizable que debe de recibir props y atomos para su creacion
+//debe de ser un componente flexible que pueda contener cualquier dato
+//debe de traer el atomo de lable, text y image para su creacion
+import { Text } from '../atoms/Text'
+import { Image } from '../atoms/Image'
+import { Label } from '../atoms/Label'
+export function Card(props) {
+  const { label, text, image, className = '', children } = props
+  const title = props.title ?? ''
+  const subtitle = props.subtitle ?? ''
+  const imageSrc = props.imageSrc ?? ''
+  const imageAlt = props.imageAlt ?? ''
+  const content = props.content ?? ''
+  const footer = props.footer ?? ''
+  const classes = ['card', className].filter(Boolean).join(' ')
 
-function BasicExample() {
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          texto
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
-  );
+    <div className={classes}>
+      {props.children}
+    </div>
+  )
 }
-
-export default BasicExample;

@@ -1,5 +1,14 @@
-import { Link } from "react-router-dom";
+//agregar Prop.
+//atomos: label, link
 
-export default function NavItem({ to, children }) {
-  return <Link to={to}>{children}</Link>;
+export function NavItem(props) {
+  const { label, link, className = '', children } = props
+  const classes = ['nav-item', className].filter(Boolean).join(' ')
+  return (
+    <div className={classes}>
+      {label && <span>{label}</span>}
+      {link && <a href={link}>Go to link</a>}
+      {children}
+    </div>
+  )
 }
