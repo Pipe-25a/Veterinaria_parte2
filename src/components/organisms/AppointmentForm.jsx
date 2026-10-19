@@ -3,7 +3,9 @@ import FormField from '../molecules/FormField';
 import SubmitButton from '../atoms/SubmitButton';
 import { validationAppointment } from '../../utils/validationAppointment';
 
-function AppointmentForm({ onSubmit, error: apiError, loading }) {
+// Organismo: formulario para agendar una cita.
+// Recibe por props: onSubmit, error (mensaje de la API), success (mensaje de éxito) y loading.
+function AppointmentForm(props) {
     const [petName, setPetName] = useState('');
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
@@ -22,13 +24,19 @@ function AppointmentForm({ onSubmit, error: apiError, loading }) {
         setErrors(newErrors);
 
         if (isValid) {
-            onSubmit({ petName, date, time, service });
+            props.onSubmit({ petName, date, time, service });
+            // Se limpian los campos para poder agendar otra cita
+            setPetName('');
+            setDate('');
+            setTime('');
+            setService('');
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {apiError && <div className="alert alert-danger mb-3">{apiError}</div>}
+            {props.error && <div className="alert alert-danger mb-3">{props.error}</div>}
+            {props.success && <div className="alert alert-success mb-3">{props.success}</div>}
 
             <FormField
                 id="petName"
@@ -67,8 +75,8 @@ function AppointmentForm({ onSubmit, error: apiError, loading }) {
                 error={errors.time}
             />
 
-            <SubmitButton disabled={loading}>
-                {loading ? 'Agendando...' : 'Confirmar Cita'}
+            <SubmitButton disabled={props.loading}>
+                {props.loading ? 'Agendando...' : 'Confirmar Cita'}
             </SubmitButton>
         </form>
     );

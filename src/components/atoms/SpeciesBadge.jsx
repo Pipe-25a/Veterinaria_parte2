@@ -1,4 +1,4 @@
-import Icon from "./Icon";
+//import Icon from "./Icon";
 
 // Átomo: etiqueta con la especie de la mascota
 const SPECIES = {

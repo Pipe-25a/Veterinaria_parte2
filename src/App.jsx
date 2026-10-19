@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AppointmentPage from './pages/AppointmentPage';
-import './App.css';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -11,11 +10,14 @@ function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [appointments, setAppointments] = useState(() => {
+    const saved = localStorage.getItem('appointments');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const navigate = useNavigate();
-
-  const clearError = () => setError('');
 
   // Login
   const handleLogin = async ({ email, password }) => {
@@ -44,17 +46,17 @@ function App() {
   };
 
   // Registro
-  const handleRegister = async ({ nombre, email, password }) => {
+  const handleRegister = async ({ name, email, password }) => {
     setError('');
     setLoading(true);
     try {
-      if (!nombre || !email || !password) {
+      if (!name || !email || !password) {
         throw new Error('Debes completar todos los campos');
       }
 
       await new Promise((r) => setTimeout(r, 800));
 
-      const newUser = { email, name: nombre };
+      const newUser = { email, name };
       setUser(newUser);
       localStorage.setItem('user', JSON.stringify(newUser));
       navigate('/appointment'); // 👈 Redirige a /appointment tras registrarse
@@ -67,14 +69,23 @@ function App() {
 
   // Handler para procesar la cita recibida desde AppointmentPage
   const handleAppointment = (data) => {
-    console.log('Cita agendada con éxito:', data);
-    // Aquí puedes guardar la cita en localStorage o en un estado global si lo necesitas
+    const newAppointment = {
+      id: Date.now(),
+      ownerEmail: user.email,
+      status: 'pending',
+      ...data,
+    };
+    const updated = [...appointments, newAppointment];
+    setAppointments(updated);
+    localStorage.setItem('appointments', JSON.stringify(updated));
+    setSuccess(`Cita solicitada para ${data.petName}. La clínica te la confirmará.`);
   };
 
   // Logout
   const handleLogout = () => {
     setUser(null);
     setError('');
+    setSuccess('');
     localStorage.removeItem('user');
     navigate('/login');
   };
@@ -126,6 +137,7 @@ function App() {
           user ? (
             <AppointmentPage
               user={user}
+              success={success}
               onSubmit={handleAppointment}
               onLogout={handleLogout}
             />

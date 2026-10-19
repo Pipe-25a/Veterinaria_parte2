@@ -3,7 +3,7 @@ import AuthTemplate from '../components/templates/AuthTemplate';
 import RegisterForm from '../components/organisms/RegisterForm';
 
 
-function RegisterPage({ onSubmit, error, loading }) {
+function RegisterPage({ props }) {
   return (
     <AuthTemplate
       title="Registro Clínica San Marcos"
@@ -12,7 +12,7 @@ function RegisterPage({ onSubmit, error, loading }) {
       footerLinkLabel="Inicia sesión"
       footerLinkTo="/login"
     >
-      <RegisterForm onSubmit={onSubmit} error={error} loading={loading} />
+      <RegisterForm onSubmit={props.onSubmit} error={props.error} loading={props.loading} />
     </AuthTemplate>
   );
 }

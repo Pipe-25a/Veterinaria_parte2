@@ -2,3 +2,4 @@
 function TableCell({ as: Tag = "td", children }) {
   return <Tag className="table-cell">{children}</Tag>;
 }
+export default TableCell;

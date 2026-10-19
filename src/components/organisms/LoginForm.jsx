@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import FormField from '../molecules/FormField';
 import SubmitButton from '../atoms/SubmitButton';
-import { validationLogin } from '../../utils/validationLogin'; 
+import { validationLogin } from '../../utils/validationLogin';
 
-function LoginForm({ onSubmit, error: apiError, loading }) {
+// Organismo: formulario de login.
+// Recibe por props: onSubmit, error (mensaje de la API) y loading.
+function LoginForm(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -15,13 +17,13 @@ function LoginForm({ onSubmit, error: apiError, loading }) {
         setErrors(newErrors);
 
         if (isValid) {
-            onSubmit({ email, password });
+            props.onSubmit({ email, password });
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {apiError && <div className="alert alert-danger mb-3">{apiError}</div>}
+            {props.error && <div className="alert alert-danger mb-3">{props.error}</div>}
 
             <FormField
                 id="email"
@@ -49,8 +51,8 @@ function LoginForm({ onSubmit, error: apiError, loading }) {
                 error={errors.password}
             />
 
-            <SubmitButton disabled={loading}>
-                {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+            <SubmitButton disabled={props.loading}>
+                {props.loading ? 'Ingresando...' : 'Iniciar Sesión'}
             </SubmitButton>
         </form>
     );

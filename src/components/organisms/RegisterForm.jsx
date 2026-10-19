@@ -1,11 +1,12 @@
-// src/components/organisms/RegisterForm.jsx
 import { useState } from 'react';
 import FormField from '../molecules/FormField';
 import SubmitButton from '../atoms/SubmitButton';
-import { validationRegister } from '../../utils/validationRegister'; // 👈 Importación aislada
+import { validationRegister } from '../../utils/validationRegister';
 
-function RegisterForm({ onSubmit, error: apiError, loading }) {
-    const [nombre, setNombre] = useState('');
+// Organismo: formulario de registro.
+// Recibe por props: onSubmit, error (mensaje de la API) y loading.
+function RegisterForm(props) {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -14,29 +15,29 @@ function RegisterForm({ onSubmit, error: apiError, loading }) {
         e.preventDefault();
 
         // Ejecuta la validación aislada del Registro
-        const { errors: newErrors, isValid } = validationRegister({ nombre, email, password });
+        const { errors: newErrors, isValid } = validationRegister({ name, email, password });
         setErrors(newErrors);
 
         if (isValid) {
-            onSubmit({ nombre, email, password });
+            props.onSubmit({ name, email, password });
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {apiError && <div className="alert alert-danger mb-3">{apiError}</div>}
+            {props.error && <div className="alert alert-danger mb-3">{props.error}</div>}
 
             <FormField
-                id="nombre"
+                id="name"
                 label="Nombre Completo"
                 type="text"
                 placeholder="Ej: Juan Pérez"
-                value={nombre}
+                value={name}
                 onChange={(e) => {
-                    setNombre(e.target.value);
-                    if (errors.nombre) setErrors((prev) => ({ ...prev, nombre: '' }));
+                    setName(e.target.value);
+                    if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
                 }}
-                error={errors.nombre}
+                error={errors.name}
             />
 
             <FormField
@@ -65,8 +66,8 @@ function RegisterForm({ onSubmit, error: apiError, loading }) {
                 error={errors.password}
             />
 
-            <SubmitButton disabled={loading}>
-                {loading ? 'Registrando...' : 'Crear Cuenta'}
+            <SubmitButton disabled={props.loading}>
+                {props.loading ? 'Registrando...' : 'Crear Cuenta'}
             </SubmitButton>
         </form>
     );

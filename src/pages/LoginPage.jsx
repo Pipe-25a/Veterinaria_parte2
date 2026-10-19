@@ -1,7 +1,7 @@
 import AuthTemplate from '../components/templates/AuthTemplate';
 import LoginForm from '../components/organisms/LoginForm';
 
-function LoginPage({ onSubmit, error, loading }) {
+function LoginPage({ props }) {
   return (
     <AuthTemplate
       title="Bienvenido"
@@ -11,7 +11,7 @@ function LoginPage({ onSubmit, error, loading }) {
       footerLinkTo="/register"
     >
       {/* ⚠️ Aquí debes pasarle onSubmit, error y loading al Organismo */}
-      <LoginForm onSubmit={onSubmit} error={error} loading={loading} />
+      <LoginForm onSubmit={props.onSubmit} error={props.error} loading={props.loading} />
     </AuthTemplate>
   );
 }

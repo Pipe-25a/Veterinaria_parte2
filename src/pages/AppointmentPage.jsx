@@ -1,29 +1,25 @@
-// src/pages/AppointmentPage.jsx
 import AuthTemplate from '../components/templates/AuthTemplate';
 import AppointmentForm from '../components/organisms/AppointmentForm';
+import Button from '../components/atoms/Button';
 
-function AppointmentPage({ user, onSubmit, error, loading, onLogout }) {
+function AppointmentPage(props) {
     return (
         <AuthTemplate
-            title={`Bienvenido/a ${user?.name || ''}`}
+            title={`Bienvenido/a ${props.user?.name || ''}`}
             subtitle="Ingrese los datos para agendar su cita"
         >
             <AppointmentForm
-                onSubmit={onSubmit}
-                error={error}
-                loading={loading}
+                onSubmit={props.onSubmit}
+                error={props.error}
+                success={props.success}
+                loading={props.loading}
             />
-
             {/* Botón funcional de Cerrar Sesión */}
-            {onLogout && (
+            {props.onLogout && (
                 <div className="text-center mt-3">
-                    <button
-                        type="button"
-                        className="btn btn-link text-danger btn-sm text-decoration-none fw-bold"
-                        onClick={onLogout}
-                    >
+                    <Button variant="link" size="sm" className="text-danger text-decoration-none fw-bold" onClick={props.onLogout}>
                         Cerrar sesión
-                    </button>
+                    </Button>
                 </div>
             )}
         </AuthTemplate>

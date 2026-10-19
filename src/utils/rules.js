@@ -1,3 +1,5 @@
+// Reglas de validación reutilizables. Cada una devuelve '' si está bien
+// o el mensaje de error si falla. Login y registro las importan desde aquí.
 export const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !email.trim()) return 'El correo electrónico es obligatorio';
@@ -11,8 +13,8 @@ export const validatePassword = (password) => {
     return '';
 };
 
-export const validateNombre = (nombre) => {
-    if (!nombre || !nombre.trim()) return 'El nombre completo es obligatorio';
-    if (nombre.trim().length < 3) return 'El nombre debe tener al menos 3 caracteres';
+export const validateName = (name) => {
+    if (!name || !name.trim()) return 'El nombre completo es obligatorio';
+    if (name.trim().length < 3) return 'El nombre debe tener al menos 3 caracteres';
     return '';
 };
