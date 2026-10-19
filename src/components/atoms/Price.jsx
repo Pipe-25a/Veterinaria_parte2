@@ -1,5 +1,4 @@
 import { formatPrice } from '../../../utils/formatPrice'
-
 // Átomo: muestra un precio. Si hay un precio anterior mayor, lo muestra tachado.
 export function Price(props) {
   const previous = props.previous ?? null

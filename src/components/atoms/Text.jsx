@@ -1,12 +1,3 @@
-import React from 'react';
-
-function Text({ children, variant }) {
-  return 
-    <p>
-      {children}
-    </p>;
-}
-/*
 // Átomo: texto corrido. "as" cambia la etiqueta (p, span, small).
 const TONES = {
   default: '',
@@ -14,12 +5,10 @@ const TONES = {
   success: 'text-success',
   danger: 'text-danger',
 }
-
 const ALIGNS = {
   center: 'text-center',
   end: 'text-end',
 }
-
 export function Text(props) {
   const Tag = props.as ?? 'p'
   const tone = props.tone ?? 'default'
@@ -32,4 +21,3 @@ export function Text(props) {
 
   return <Tag className={classes}>{props.children}</Tag>
 }
-*/

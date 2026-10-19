@@ -4,7 +4,6 @@ const SIZES = {
   sm: 'btn-sm',
   lg: 'btn-lg',
 }
-
 export function Button(props) {
   const variant = props.variant ?? 'primary'
   const type = props.type ?? 'button'
@@ -12,7 +11,6 @@ export function Button(props) {
   const size = props.size ?? null
   const fullWidth = props.fullWidth ?? false
   const className = props.className ?? ''
-
   // filter(Boolean) descarta los valores vacíos, así no quedan espacios sobrantes.
   const classes = [
     'btn',

@@ -1,37 +1,13 @@
-import Table from 'react-bootstrap/Table';
+//correcion de la tabla es necesario que traiga props.
+//la tabla debe ser un componete flexible que pueda contener cualquier dato
 
-function Table() {
+export function Table(props) {
+  const className = props.className ?? ''
+  const classes = ['table', className].filter(Boolean).join(' ')
+
   return (
-    <Table className="Table">
-      <thead>
-        <tr>
-          <th> </th>
-          <th> </th>
-          <th> </th>
-          <th> </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td>  </td>
-        </tr>
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-        </tr>
-      </tbody>
-    </Table>
-  );
+    <table className={classes}>
+      {props.children}
+    </table>
+  )
 }
-export default Table;

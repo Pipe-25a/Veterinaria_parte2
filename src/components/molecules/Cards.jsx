@@ -17,17 +17,3 @@ function BasicExample() {
 }
 
 export default BasicExample;
-
-/*
-  // Átomo: caja contenedora (la "caja blanca con borde" de tus páginas).
-export function Card(props) {
-  const Tag = props.as ?? 'div'
-  const className = props.className ?? ''
-
-  return (
-    <Tag className={`card shadow-sm ${className}`.trim()}>
-      <div className="card-body">{props.children}</div>
-    </Tag>
-  )
-}
-*/
