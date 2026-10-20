@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FormField from '../molecules/FormField';
-import SubmitButton from '../atoms/SubmitButton';
+import Button from '../atoms/Button';
 import { validationRegister } from '../../utils/validationRegister';
 
 // Organismo: formulario de registro.
@@ -66,9 +66,9 @@ function RegisterForm(props) {
                 error={errors.password}
             />
 
-            <SubmitButton disabled={props.loading}>
+            <Button type="submit" disabled={props.loading}>
                 {props.loading ? 'Registrando...' : 'Crear Cuenta'}
-            </SubmitButton>
+            </Button>
         </form>
     );
 }
