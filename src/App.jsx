@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { ROLES } from "./constants/roles";
+import { ROLES } from "./data/roles";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";

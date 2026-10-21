@@ -1,4 +1,4 @@
-import { ROLES } from "../constants/roles";
+import { ROLES } from "../data/roles";
 
 const USERS_KEY = "users";
 
