@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { ROLE_HOME } from "../../constants/roles";
+import { ROLE_HOME } from "../../data/roles";
 import NavItem from "../molecules/NavItem";
 import Button from "../atoms/Button";
 

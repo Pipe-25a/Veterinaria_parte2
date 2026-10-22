@@ -4,6 +4,9 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AppointmentPage from './pages/AppointmentPage';
 
+import ProtectedRoute from "./components/ProtectedRoute";
+import { ROLES } from "./data/roles";
+
 function App() {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('user');

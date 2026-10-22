@@ -2,6 +2,6 @@ import { useEffect } from 'react'
 
 export function useTituloPagina(titulo) {
   useEffect(() => {
-    document.title = `${titulo} | Tienda Demo`
+    document.title = `${titulo} | Veterinaria San Marcos`
   }, [titulo])
 }

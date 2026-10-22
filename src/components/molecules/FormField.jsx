@@ -1,38 +1,31 @@
-import Label from "../atoms/Label";
-import TextField from "../atoms/TextField";
-import Select from "../atoms/Select";
+// Molécula: campo de formulario = Label + (Input | Textarea) + mensaje de error.
+// Sirve para cualquier formulario: login, registro, contacto, citas...
+// "as" elige el control ('input' por defecto o 'textarea').
+// Si no recibe "name", usa el "id" (así los handlers con e.target.name funcionan).
+// Cualquier otra prop (type, value, onChange, placeholder, rows...) pasa al control.
+import { Label } from '../atoms/Label'
+import { Input } from '../atoms/Input'
+import { Textarea } from '../atoms/TextArea'
 
-// Molécula: Label + (TextField o Select) + mensaje de error.
-// Si recibe props.options muestra un Select; si no, un TextField.
-function FormField(props) {
-    const isInvalid = Boolean(props.error);
+export function FormField(props) {
+  const { id, label, as = 'input', name, error, required = false, className = '', ...rest } = props
 
-    return (
-        <div className="mb-3">
-            <Label htmlFor={props.id} text={props.label} />
-            {props.options ? (
-                <Select
-                    id={props.id}
-                    value={props.value}
-                    onChange={props.onChange}
-                    options={props.options}
-                    placeholder={props.placeholder}
-                    isInvalid={isInvalid}
-                />
-            ) : (
-                <TextField
-                    id={props.id}
-                    type={props.type}
-                    value={props.value}
-                    onChange={props.onChange}
-                    placeholder={props.placeholder}
-                    min={props.min}
-                    isInvalid={isInvalid}
-                />
-            )}
-            {isInvalid && <div className="invalid-feedback">{props.error}</div>}
+  const Control = as === 'textarea' ? Textarea : Input
+  const classes = ['mb-3', className].filter(Boolean).join(' ')
+
+  return (
+    <div className={classes}>
+      {label && (
+        <Label htmlFor={id} required={required}>
+          {label}
+        </Label>
+      )}
+      <Control id={id} name={name ?? id} required={required} invalid={Boolean(error)} {...rest} />
+      {error && (
+        <div className="invalid-feedback d-block" role="alert">
+          {error}
         </div>
-    );
+      )}
+    </div>
+  )
 }
-
-export default FormField;

@@ -1,0 +1,6 @@
+[
+  { "id": "direccion", "label": "Dirección", "value": "Av. San Marcos 1234, Santiago" },
+  { "id": "telefono", "label": "Teléfono", "value": "+56 2 2345 6789", "href": "tel:+56223456789" },
+  { "id": "correo", "label": "Correo", "value": "contacto@veterinariasanmarcos.cl", "href": "mailto:contacto@veterinariasanmarcos.cl" },
+  { "id": "horario", "label": "Horario de atención", "value": "Lunes a viernes de 9:00 a 18:00 · Sábados de 10:00 a 14:00" }
+]

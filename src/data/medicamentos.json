@@ -1,0 +1,11 @@
+[
+  { "id": 1, "nombre": "Antiparasitario externo", "categoria": "Antiparasitarios", "presentacion": "Pipeta, 1 unidad", "precio": 9990 },
+  { "id": 2, "nombre": "Antiparasitario interno", "categoria": "Antiparasitarios", "presentacion": "Comprimidos, 2 unidades", "precio": 7990 },
+  { "id": 3, "nombre": "Antibiótico de amplio espectro", "categoria": "Antibióticos", "presentacion": "Comprimidos, 10 unidades", "precio": 12990 },
+  { "id": 4, "nombre": "Antiinflamatorio", "categoria": "Antiinflamatorios", "presentacion": "Comprimidos, 10 unidades", "precio": 11990 },
+  { "id": 5, "nombre": "Suplemento articular", "categoria": "Suplementos", "presentacion": "Frasco, 60 masticables", "precio": 19990 },
+  { "id": 6, "nombre": "Vitaminas para cachorros", "categoria": "Suplementos", "presentacion": "Frasco, 100 ml", "precio": 8990 },
+  { "id": 7, "nombre": "Shampoo medicado", "categoria": "Higiene", "presentacion": "Frasco, 250 ml", "precio": 7490 },
+  { "id": 8, "nombre": "Limpiador de oídos", "categoria": "Higiene", "presentacion": "Frasco, 60 ml", "precio": 5990 },
+  { "id": 9, "nombre": "Gotas oftálmicas", "categoria": "Oftalmología", "presentacion": "Frasco, 10 ml", "precio": 6990 }
+]

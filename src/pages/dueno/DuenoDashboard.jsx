@@ -1,33 +1,28 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from '../../components/organisms/Sidebar';
-import MisCitas from './MisCitas';
-import MisMascotas from './MisMascotas';
+import { DashboardTemplate } from '../../components/templates/DashboardTemplate';
+import Home from './Home';
+import Contact from './Contact';
+import Services from './Services';
 import AgendarCita from './AgendarCita';
 
 const LINKS = [
-  { to: '/dueno', label: 'Mis citas', end: true },
-  { to: '/dueno/mascotas', label: 'Mis mascotas', end: true },
-  { to: '/dueno/mascotas/nueva', label: 'Agregar mascota' },
+  { to: '/dueno', label: 'Inicio', end: true },
   { to: '/dueno/citas/nueva', label: 'Agendar cita' },
+  { to: '/dueno/contacto', label: 'Contacto' },
+  { to: '/dueno/servicios', label: 'Servicios y productos' },
 ];
 
 const DuenoDashboard = () => (
-  <div className="container-fluid">
-    <div className="row">
-      <div className="col-md-3 col-lg-2 px-0">
-        <Sidebar links={LINKS} />
-      </div>
-      <main className="col-md-9 col-lg-10 p-4">
-        <Routes>
-          <Route index element={<MisCitas />} />
-          <Route path="mascotas" element={<MisMascotas />} />
-          <Route path="mascotas/nueva" element={<AgregarMascota />} />
-          <Route path="citas/nueva" element={<AgendarCita />} />
-          <Route path="*" element={<Navigate to="/dueno" replace />} />
-        </Routes>
-      </main>
-    </div>
-  </div>
+  <DashboardTemplate sidebar={<Sidebar links={LINKS} />}>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="citas/nueva" element={<AgendarCita />} />
+      <Route path="contacto" element={<Contact />} />
+      <Route path="servicios" element={<Services />} />
+      <Route path="*" element={<Navigate to="/dueno" replace />} />
+    </Routes>
+  </DashboardTemplate>
 );
 
 export default DuenoDashboard;
