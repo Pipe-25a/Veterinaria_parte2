@@ -5,13 +5,27 @@
 // Cualquier otra prop (type, value, onChange, placeholder, rows...) pasa al control.
 import { Label } from '../atoms/Label'
 import { Input } from '../atoms/Input'
-import { Textarea } from '../atoms/TextArea'
+import { TextArea } from '../atoms/TextArea'
 
 export function FormField(props) {
-  const { id, label, as = 'input', name, error, required = false, className = '', ...rest } = props
-
-  const Control = as === 'textarea' ? Textarea : Input
+  const as = props.as ?? 'input'
+  const name = props.name ?? props.id
+  const required = props.required ?? false
+  const className = props.className ?? ''
+  const Control = as === 'textarea' ? TextArea : Input
   const classes = ['mb-3', className].filter(Boolean).join(' ')
+
+  // Forwarding al <Control>: type, value, onChange, placeholder, rows, etc.
+  const {
+    id,
+    label,
+    as: _as,
+    name: _name,
+    error,
+    required: _r,
+    className: _c,
+    ...rest
+  } = props
 
   return (
     <div className={classes}>
@@ -20,7 +34,13 @@ export function FormField(props) {
           {label}
         </Label>
       )}
-      <Control id={id} name={name ?? id} required={required} invalid={Boolean(error)} {...rest} />
+      <Control
+        id={id}
+        name={name}
+        required={required}
+        invalid={Boolean(error)}
+        {...rest}
+      />
       {error && (
         <div className="invalid-feedback d-block" role="alert">
           {error}

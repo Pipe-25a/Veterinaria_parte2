@@ -1,45 +1,55 @@
-import { useState } from 'react';
-import FormField from '../molecules/FormField';
-import Button from '../atoms/Button';
-import { validationRegister } from '../../utils/validationRegister';
+// src/components/organisms/RegisterForm.jsx
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { FormField } from '../molecules/FormField'
+import { Button } from '../atoms/Button'
+import { useAuth } from '../../context/AuthContext'
+import { validationRegister } from '../../utils/validationRegister'
+import { ROLE_HOME } from '../../data/roles'
 
-// Organismo: formulario de registro.
-// Recibe por props: onSubmit, error (mensaje de la API) y loading.
-function RegisterForm(props) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({});
+function RegisterForm() {
+    const { register } = useAuth()
+    const navigate = useNavigate()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState({})
+    const [apiError, setApiError] = useState('')
+    const [loading, setLoading] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setApiError('')
+        const { errors: newErrors, isValid } = validationRegister({ name, email, password })
+        setErrors(newErrors)
+        if (!isValid) return
 
-        // Ejecuta la validación aislada del Registro
-        const { errors: newErrors, isValid } = validationRegister({ name, email, password });
-        setErrors(newErrors);
+        setLoading(true)
+        const result = register({ name, email, password })
+        setLoading(false)
 
-        if (isValid) {
-            props.onSubmit({ name, email, password });
+        if (!result.ok) {
+            setApiError(result.error)
+            return
         }
-    };
+        navigate(ROLE_HOME[result.user.role] ?? '/')
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            {props.error && <div className="alert alert-danger mb-3">{props.error}</div>}
-
+        <form onSubmit={handleSubmit} noValidate>
+            {apiError && <div className="alert alert-danger mb-3">{apiError}</div>}
             <FormField
                 id="name"
-                label="Nombre Completo"
+                label="Nombre completo"
                 type="text"
                 placeholder="Ej: Juan Pérez"
                 value={name}
                 onChange={(e) => {
-                    setName(e.target.value);
-                    if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
+                    setName(e.target.value)
+                    if (errors.name) setErrors((p) => ({ ...p, name: '' }))
                 }}
                 error={errors.name}
             />
-
             <FormField
                 id="email"
                 label="Correo electrónico"
@@ -47,12 +57,11 @@ function RegisterForm(props) {
                 placeholder="ejemplo@correo.com"
                 value={email}
                 onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
+                    setEmail(e.target.value)
+                    if (errors.email) setErrors((p) => ({ ...p, email: '' }))
                 }}
                 error={errors.email}
             />
-
             <FormField
                 id="password"
                 label="Contraseña"
@@ -60,17 +69,16 @@ function RegisterForm(props) {
                 placeholder="******"
                 value={password}
                 onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors.password) setErrors((prev) => ({ ...prev, password: '' }));
+                    setPassword(e.target.value)
+                    if (errors.password) setErrors((p) => ({ ...p, password: '' }))
                 }}
                 error={errors.password}
             />
-
-            <Button type="submit" disabled={props.loading}>
-                {props.loading ? 'Registrando...' : 'Crear Cuenta'}
+            <Button type="submit" disabled={loading}>
+                {loading ? 'Registrando...' : 'Crear Cuenta'}
             </Button>
         </form>
-    );
+    )
 }
 
-export default RegisterForm;
+export default RegisterForm

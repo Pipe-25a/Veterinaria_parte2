@@ -1,14 +1,18 @@
 //agregar Prop.
 //atomos: label, link
+import { NavLink } from 'react-router-dom'
 
 export function NavItem(props) {
-  const { label, link, className = '', children } = props
-  const classes = ['nav-item', className].filter(Boolean).join(' ')
+  const className = props.className ?? ''
+
   return (
-    <div className={classes}>
-      {label && <span>{label}</span>}
-      {link && <a href={link}>Go to link</a>}
-      {children}
-    </div>
+    <NavLink
+      to={props.to}
+      className={({ isActive }) =>
+        ['nav-link', isActive && 'active', className].filter(Boolean).join(' ')
+      }
+    >
+      {props.children ?? props.label}
+    </NavLink>
   )
 }

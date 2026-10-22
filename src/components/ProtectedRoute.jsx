@@ -1,14 +1,12 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// src/components/ProtectedRoute.jsx
+import { Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
-export default function ProtectedRoute({ roles, children }) {
-  const { user } = useAuth();
+export default function ProtectedRoute(props) {
+  const { user } = useAuth()
+  const roles = props.roles ?? []
 
-  // Sin sesión: al login
-  if (!user) return <Navigate to="/login" replace />;
-
-  // Con sesión pero sin el rol permitido: al inicio
-  if (!roles.includes(user.role)) return <Navigate to="/" replace />;
-
-  return children;
+  if (!user) return <Navigate to="/login" replace />
+  if (roles.length > 0 && !roles.includes(user.role)) return <Navigate to="/" replace />
+  return props.children
 }

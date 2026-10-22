@@ -1,13 +1,14 @@
-import Text from "../atoms/Text";
-import Link from "../atoms/Link";
-import TableCell from "../atoms/TableCell";
-import ServiceRow from "../molecules/ServiceRow";
+// src/components/organisms/ServiceCard.jsx
+import { Link as RouterLink } from 'react-router-dom'
+import { Text } from '../atoms/Text'
+import TableCell from '../atoms/TableCell'
+import ServiceRow from '../molecules/ServiceRow'
 
-function ServicesCard({ servicios }) {
+function ServicesCard(props) {
   return (
     <section id="servicios">
       <Text>Información sobre los servicios que se ofrecen:</Text>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <TableCell as="th">Categoría</TableCell>
@@ -16,7 +17,7 @@ function ServicesCard({ servicios }) {
           </tr>
         </thead>
         <tbody>
-          {servicios.map((s) => (
+          {props.servicios.map((s) => (
             <ServiceRow
               key={s.servicio}
               categoria={s.categoria}
@@ -26,8 +27,11 @@ function ServicesCard({ servicios }) {
           ))}
         </tbody>
       </table>
-      <Link to="/servicios" variant="nav">Catalogo</Link>
+      <RouterLink to="/servicios" className="btn btn-outline-primary">
+        Catálogo
+      </RouterLink>
     </section>
-  );
+  )
 }
-export default ServicesCard;
+
+export default ServicesCard

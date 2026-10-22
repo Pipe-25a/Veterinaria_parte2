@@ -1,7 +1,7 @@
-import AuthTemplate from '../components/templates/AuthTemplate';
-import LoginForm from '../components/organisms/LoginForm';
+import AuthTemplate from '../components/templates/AuthTemplate'
+import { LoginForm } from '../components/organisms/LoginForm'
 
-function LoginPage({ props }) {
+function LoginPage() {
   return (
     <AuthTemplate
       title="Bienvenido"
@@ -10,10 +10,9 @@ function LoginPage({ props }) {
       footerLinkLabel="Regístrate"
       footerLinkTo="/register"
     >
-      {/* ⚠️ Aquí debes pasarle onSubmit, error y loading al Organismo */}
-      <LoginForm onSubmit={props.onSubmit} error={props.error} loading={props.loading} />
+      <LoginForm />
     </AuthTemplate>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage

@@ -1,7 +1,6 @@
 import { validateEmail, validatePassword } from './rules';
 
-// Valida el formulario de Login completo
-export const validationLogin = ({ email, password }) => {
+export function validationLogin({ email, password }) {
     const errors = {};
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
@@ -13,4 +12,4 @@ export const validationLogin = ({ email, password }) => {
         errors,
         isValid: Object.keys(errors).length === 0,
     };
-};
+}

@@ -11,9 +11,9 @@ const SPECIES = {
 function SpeciesBadge(props) {
   return (
     <span className="badge rounded-pill text-bg-light border">
-      <Icon name={props.species} size="1rem" /> {SPECIES[props.species] || props.species}
+      {SPECIES[props.species] || props.species}
     </span>
-  );
+  )
 }
 
-export default SpeciesBadge;
+export default SpeciesBadge

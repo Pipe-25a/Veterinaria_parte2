@@ -1,9 +1,7 @@
+import AuthTemplate from '../components/templates/AuthTemplate'
+import RegisterForm from '../components/organisms/RegisterForm'
 
-import AuthTemplate from '../components/templates/AuthTemplate';
-import RegisterForm from '../components/organisms/RegisterForm';
-
-
-function RegisterPage({ props }) {
+export default function RegisterPage() {
   return (
     <AuthTemplate
       title="Registro Clínica San Marcos"
@@ -12,9 +10,7 @@ function RegisterPage({ props }) {
       footerLinkLabel="Inicia sesión"
       footerLinkTo="/login"
     >
-      <RegisterForm onSubmit={props.onSubmit} error={props.error} loading={props.loading} />
+      <RegisterForm />
     </AuthTemplate>
-  );
+  )
 }
-
-export default RegisterPage;
