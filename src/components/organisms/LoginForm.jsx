@@ -4,9 +4,8 @@ import { FormField } from '../molecules/FormField'
 import { Button } from '../atoms/Button'
 import { useAuth } from '../../context/AuthContext'
 import { validationLogin } from '../../utils/validationLogin'
-import { ROLE_HOME } from '../../data/roles'
 
-export function LoginForm() {
+function LoginForm() {
     const { login } = useAuth()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
@@ -30,7 +29,9 @@ export function LoginForm() {
             setApiError('Credenciales inválidas')
             return
         }
-        navigate(ROLE_HOME[logged.role] ?? '/')
+
+        // 👇 CAMBIO: En vez de ROLE_HOME, lo enviamos al Home público
+        navigate('/')
     }
 
     return (
@@ -67,4 +68,4 @@ export function LoginForm() {
     )
 }
 
-
+export default LoginForm

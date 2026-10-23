@@ -1,5 +1,9 @@
 // Molécula: una fila de la tabla de citas.
 // Los botones de acción solo aparecen si llegan los handlers por props.
+// Molécula: una fila de la tabla de citas.
+// Recibe la cita en el esquema real del servicio (fecha/hora/tipo/estado/duenoEmail)
+// y la mascota ya resuelta por prop (nombre/especie). No consulta servicios.
+// Los botones de acción solo aparecen si llegan los handlers por props.
 import TableCell from '../atoms/TableCell'
 import { Button } from '../atoms/Button'
 import SpeciesBadge from '../atoms/SpeciesBadge'
@@ -7,32 +11,34 @@ import AppointmentStatusBadge from '../atoms/AppointmentStatusBadge'
 import { formatDate } from '../../utils/format'
 
 function AppointmentRow(props) {
-    const appointment = props.appointment
+    const cita = props.appointment
+    const mascota = props.mascota //  llega por prop; puede ser null
     const hasActions = props.onConfirm || props.onReschedule || props.onCancel
-    const isClosed = appointment.status === 'cancelled'
+    const isClosed = cita.estado === 'cancelada' //  estado real
 
     return (
         <tr>
-            {props.showOwner && <TableCell>{appointment.ownerName}</TableCell>}
+            {props.showOwner && <TableCell>{cita.duenoEmail}</TableCell>}
             <TableCell>
-                {appointment.petName} <SpeciesBadge species={appointment.species} />
+                {mascota?.nombre ?? '—'}{' '}
+                {mascota?.especie && <SpeciesBadge species={mascota.especie} />}
             </TableCell>
-            <TableCell>{props.serviceName}</TableCell>
+            <TableCell>{cita.tipo}</TableCell>
             <TableCell>
-                {formatDate(appointment.date)} {appointment.time}
+                {formatDate(cita.fecha)} {cita.hora}
             </TableCell>
             <TableCell>
-                <AppointmentStatusBadge status={appointment.status} />
+                <AppointmentStatusBadge status={cita.estado} />
             </TableCell>
             {hasActions && (
                 <TableCell className="text-nowrap">
                     {!isClosed && (
                         <div className="d-flex flex-wrap gap-1">
-                            {appointment.status !== 'confirmed' && (
+                            {cita.estado !== 'confirmada' && (
                                 <Button
                                     size="sm"
                                     variant="success"
-                                    onClick={() => props.onConfirm(appointment.id)}
+                                    onClick={() => props.onConfirm(cita.id)}
                                 >
                                     Confirmar
                                 </Button>
@@ -40,14 +46,14 @@ function AppointmentRow(props) {
                             <Button
                                 size="sm"
                                 variant="outline-primary"
-                                onClick={() => props.onReschedule(appointment.id)}
+                                onClick={() => props.onReschedule(cita.id)}
                             >
                                 Reagendar
                             </Button>
                             <Button
                                 size="sm"
                                 variant="outline-danger"
-                                onClick={() => props.onCancel(appointment.id)}
+                                onClick={() => props.onCancel(cita.id)}
                             >
                                 Cancelar
                             </Button>

@@ -1,4 +1,3 @@
-// src/utils/validacionAppointment.js
 
 export const validationAppointment = ({ petName, date, time, service }) => {
     const errors = {};

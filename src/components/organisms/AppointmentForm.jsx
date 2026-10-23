@@ -1,4 +1,3 @@
-// src/components/organisms/AppointmentForm.jsx
 import { useState } from 'react'
 import { FormField } from '../molecules/FormField'
 import Select  from '../atoms/Select'

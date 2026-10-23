@@ -1,4 +1,3 @@
-// src/components/templates/AuthTemplate.jsx
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import { Link as RouterLink } from 'react-router-dom'
 import { Heading } from '../atoms/Heading'

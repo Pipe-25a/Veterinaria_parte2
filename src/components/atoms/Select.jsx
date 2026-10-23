@@ -4,7 +4,6 @@
 // Cualquier otra prop (id, name, value, onChange, onBlur, required, disabled...)
 // pasa directo al <select>.
 
-// src/components/atoms/Select.jsx
 const SIZES = {
   sm: 'form-select-sm',
   lg: 'form-select-lg',

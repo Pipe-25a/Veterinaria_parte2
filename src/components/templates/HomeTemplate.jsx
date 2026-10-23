@@ -1,14 +1,20 @@
-// Template: pantalla de inicio = encabezado + zona de accesos rápidos.
-// "actions" recibe el organismo con los accesos (por ejemplo <QuickActions />).
-import { PageHeader } from '../molecules/PageHeader'
+import { useTituloPagina } from "../../hooks/useTituloPagina"
 
-export function HomeTemplate(props) {
-  const { title, subtitle, actions } = props
+export default function HomeTemplate(props) {
+  useTituloPagina(props.title || 'Inicio')
 
   return (
-    <>
-      <PageHeader title={title} subtitle={subtitle} />
-      {actions}
-    </>
+    <div>
+      {/* Título y subtítulo dinámicos */}
+      <div className="mb-4">
+        <h2 className="fw-bold">{props.title}</h2>
+        {props.subtitle && <p className="text-muted fs-5">{props.subtitle}</p>}
+      </div>
+
+      {/* Aquí se renderiza lo que le pasen en la prop actions */}
+      <div className="mt-4">
+        {props.actions}
+      </div>
+    </div>
   )
 }

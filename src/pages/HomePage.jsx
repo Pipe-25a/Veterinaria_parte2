@@ -1,0 +1,43 @@
+import MainLayout from '../components/templates/MainLayout'
+import HomeTemplate from '../components/templates/HomeTemplate'
+import { HeroSection } from '../components/organisms/HeroSection'
+import ServiceCard from '../components/organisms/ServiceCard'
+import { Footer } from '../components/organisms/Footer'
+import serviciosData from '../data/servicios.json'
+import contactoData from '../data/contacto.json'
+
+function HomePage(props) {
+  const servicios = props.servicios ?? serviciosData
+  const contacto = props.contacto ?? contactoData
+
+  return (
+    <MainLayout>
+      <div className="d-flex flex-column min-vh-100 bg-light">
+        <main className="flex-grow-1 pb-5 pt-4">
+
+          {/* Envolvemos todo en un container para que tenga márgenes */}
+          <div className="container">
+            <HomeTemplate
+              actions={
+                <>
+                  <HeroSection
+                    logoSrc="https://via.placeholder.com/150"
+                    logoAlt="Logo Clínica San Marcos"
+                    title="Clínica Veterinaria"
+                    subtitle="Bienvenidos a nuestra clínica San Marcos"
+                  />
+                  <ServiceCard servicios={servicios} />
+                </>
+              }
+            />
+          </div>
+
+        </main>
+
+        <Footer title="Información de contacto" items={contacto} />
+      </div>
+    </MainLayout>
+  )
+}
+
+export default HomePage;

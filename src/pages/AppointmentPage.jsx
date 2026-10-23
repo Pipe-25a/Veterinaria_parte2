@@ -1,15 +1,14 @@
 import { useState } from 'react'
-import AuthTemplate from "../components/templates/AuthTemplate";
-import AppointmentForm from "../components/organisms/AppointmentForm";
-import { Button } from "../components/atoms/Button";
-import { useAuth } from "../context/AuthContext";
-import { agendarCita } from "../services/citaService";
-import { getMascotasByDueno } from "../services/mascotaService";
-import { useTituloPagina } from "../hooks/useTituloPagina"; 
+import AuthTemplate from '../components/templates/AuthTemplate'
+import AppointmentForm from '../components/organisms/AppointmentForm'
+import { Button } from '../components/atoms/Button'
+import { useAuth } from '../context/AuthContext'
+import { agendarCita } from '../services/citaService'
+import { getMascotasByDueno } from '../services/mascotaService'
+import { useTituloPagina } from '../hooks/useTituloPagina'
 
-
-function AppointmentPage(props) {
-    useTituloPagina('Agendar cita');
+function AppointmentPage() {
+    useTituloPagina('Agendar cita')
 
     const { user, logout } = useAuth()
     const [error, setError] = useState('')
@@ -44,7 +43,7 @@ function AppointmentPage(props) {
 
         if (!result.ok) {
             setError(result.error)
-            return result
+            return { ok: false }
         }
 
         setSuccess(`Cita agendada para ${mascota.nombre} el ${data.date} a las ${data.time}.`)
@@ -77,41 +76,3 @@ function AppointmentPage(props) {
 }
 
 export default AppointmentPage
-
-
-/* // src/pages/AppointmentPage.jsx
-import AuthTemplate from "../components/templates/AuthTemplate";
-import AppointmentForm from "../components/organisms/AppointmentForm";
-import { Button } from "../components/atoms/Button";
-import { useTituloPagina } from "../hooks/useTituloPagina"; 
-
-// Recibimos todo por props
-function AppointmentPage(props) {
-    useTituloPagina('Agendar cita');
-
-    return (
-        <AuthTemplate
-            title={`Bienvenido/a ${props.user?.name ?? ''}`}
-            subtitle="Ingrese los datos para agendar su cita"
-        >
-            <AppointmentForm
-                onSubmit={props.onSubmit}
-                error={props.error}
-                success={props.success}
-                loading={props.loading}
-            />
-            <div className="text-center mt-3">
-                <Button
-                    variant="link"
-                    size="sm"
-                    className="text-danger text-decoration-none fw-bold"
-                    onClick={props.onLogout}
-                >
-                    Cerrar sesión
-                </Button>
-            </div>
-        </AuthTemplate>
-    )
-}
-
-export default AppointmentPage */

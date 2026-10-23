@@ -1,11 +1,9 @@
-// src/components/organisms/RegisterForm.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FormField } from '../molecules/FormField'
 import { Button } from '../atoms/Button'
 import { useAuth } from '../../context/AuthContext'
 import { validationRegister } from '../../utils/validationRegister'
-import { ROLE_HOME } from '../../data/roles'
 
 function RegisterForm() {
     const { register } = useAuth()
@@ -32,7 +30,9 @@ function RegisterForm() {
             setApiError(result.error)
             return
         }
-        navigate(ROLE_HOME[result.user.role] ?? '/')
+
+        //  CAMBIO: En vez de ROLE_HOME, lo enviamos al Home público
+        navigate('/')
     }
 
     return (

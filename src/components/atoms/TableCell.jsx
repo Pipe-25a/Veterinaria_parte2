@@ -1,5 +1,4 @@
 //Esto es para la tabla
-// src/components/atoms/TableCell.jsx
 function TableCell(props) {
   const Tag = props.as ?? 'td'
   const className = props.className ?? ''

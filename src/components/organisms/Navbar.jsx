@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { ROLE_HOME } from '../../data/roles'
-import { NavItem } from '../molecules/NavItem'
 import { Button } from '../atoms/Button'
 import { Link } from '../atoms/Link'
 
@@ -11,48 +10,57 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    navigate('/') // Al cerrar sesión, lo dejamos en el Home público
   }
 
+  // Ruta de agendar según si está logueado o no
+  const rutaAgendar = user ? '/appointment' : '/login'
+
   return (
-    <nav className="navbar navbar-expand bg-white border-bottom shadow-sm px-3 py-2 sticky-top">
-      <div className="container d-flex align-items-center justify-content-between">
-        {/* Marca de la veterinaria */}
-        <Link
-          href="/"
-          onNavigate={navigate}
-          className="navbar-brand fw-bold text-primary text-decoration-none d-flex align-items-center gap-2 m-0"
-        >
-          <span className="fs-4">🐾</span>
-          <span className="fs-5">Veterinaria San Marcos</span>
+    <nav className="navbar navbar-expand-lg bg-white sticky-top shadow-sm">
+      <div className="container d-flex justify-content-between align-items-center">
+
+        <Link href="/" onNavigate={navigate} className="fs-5 fw-bold text-success text-decoration-none">
+          🐾 Veterinaria San Marcos
         </Link>
 
-        {/* Enlaces de navegación */}
         <div className="d-flex align-items-center gap-3">
-          <NavItem to="/">Inicio</NavItem>
+          <NavLink to="/" className="text-dark text-decoration-none">Inicio</NavLink>
+          <NavLink to="/servicios" className="text-dark text-decoration-none">Servicios</NavLink>
+          <NavLink to="/contacto" className="text-dark text-decoration-none">Contacto</NavLink>
+
+          {/* BOTÓN AGENDAR CITA: Siempre visible, inteligente */}
+          <NavLink
+            to={rutaAgendar}
+            className="btn btn-primary btn-sm text-white text-decoration-none"
+          >
+            Agendar Cita
+          </NavLink>
+
           {user ? (
             <>
-              <NavItem to={ROLE_HOME[user.role] ?? '/'}>Mi panel</NavItem>
-              <span className="text-muted small fw-medium">{user.name}</span>
-              <Button variant="outline-danger" size="sm" onClick={handleLogout}>
-                Cerrar sesión
+              <NavLink
+                to={ROLE_HOME[user.role] ?? '/dueno'}
+                className="btn btn-outline-success btn-sm"
+              >
+                Mi Panel
+              </NavLink>
+              <Button variant="danger" size="sm" onClick={handleLogout}>
+                Salir
               </Button>
             </>
           ) : (
             <>
-              <NavItem to="/login">Ingresar</NavItem>
-              <NavItem to="/register">Registrarse</NavItem>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => navigate('/login')}
-                className="d-none d-md-inline-block"
-              >
-                Agendar Cita
-              </Button>
+              <NavLink to="/login" className="text-dark text-decoration-none">
+                Ingresar
+              </NavLink>
+              <NavLink to="/register" className="btn btn-success btn-sm text-white text-decoration-none">
+                Registrarse
+              </NavLink>
             </>
           )}
         </div>
+
       </div>
     </nav>
   )

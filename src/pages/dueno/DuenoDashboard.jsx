@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Sidebar from '../../components/organisms/Sidebar'
 import { DashboardTemplate } from '../../components/templates/DashboardTemplate'
-import Home from './Home'
+import HomeDueno from './HomeDueno'
 import Contact from './Contact'
 import Services from './Services'
 import AppointmentPage from '../AppointmentPage'
@@ -16,7 +16,7 @@ const LINKS = [
 const DuenoDashboard = () => (
   <DashboardTemplate sidebar={<Sidebar links={LINKS} />}>
     <Routes>
-      <Route index element={<Home />} />
+      <Route index element={<HomeDueno />} />
       <Route path="citas/nueva" element={<AppointmentPage />} />
       <Route path="contacto" element={<Contact />} />
       <Route path="servicios" element={<Services />} />
