@@ -7,12 +7,15 @@ import RegisterPage from './pages/RegisterPage'
 import DuenoDashboard from './pages/dueno/DuenoDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import AppointmentPage from './pages/AppointmentPage'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 function App() {
   const { user } = useAuth()
 
   // Ruta a la que va un usuario logueado (para redirigirlo si intenta ir a /login)
-  const home = user ? (ROLE_HOME[user.role] ?? '/dueno') : '/login'
+  //  2. (Opcional pero recomendado) Cambié el '/dueno' por '/' para que 
+  // cualquier rol sin panel definido caiga al home público.
+  const home = user ? (ROLE_HOME[user.role] ?? '/') : '/login'
 
   return (
     <Routes>
@@ -42,6 +45,16 @@ function App() {
         element={
           <ProtectedRoute roles={['dueno']}>
             <AppointmentPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/*  3. Agregamos la ruta protegida para el Admin */}
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute roles={['admin']}>
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />

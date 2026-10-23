@@ -3,9 +3,9 @@ import { ROLES } from '../data/roles'
 const USERS_KEY = 'users'
 
 const SEED_USERS = [
-  { name: 'Admin', email: 'admin@test.com', password: '123456', role: ROLES.ADMIN },
-  { name: 'Veterinario', email: 'vet@test.com', password: '123456', role: ROLES.VET },
-  { name: 'Dueño', email: 'dueno@test.com', password: '123456', role: ROLES.DUENO },
+  { id: 'admin', name: 'Admin', email: 'admin@test.com', password: '123456', role: ROLES.ADMIN },
+  { id: 'vet', name: 'Veterinario', email: 'vet@test.com', password: '123456', role: ROLES.VET },
+  { id: 'dueno', name: 'Dueño', email: 'dueno@test.com', password: '123456', role: ROLES.DUENO },
 ]
 
 const loadRegistered = () => {
@@ -17,7 +17,8 @@ const loadRegistered = () => {
   }
 }
 
-const getAllUsers = () => [...SEED_USERS, ...loadRegistered()]
+// 1. Agregamos "export" para que AdminUsersPage pueda usarla
+export const getAllUsers = () => [...SEED_USERS, ...loadRegistered()]
 
 export const findUser = (email, password) =>
   getAllUsers().find(
@@ -35,7 +36,22 @@ export const registerUser = ({ name, email, password }) => {
   if (getAllUsers().some((u) => u.email === cleanEmail))
     return { ok: false, error: 'Ese correo ya está registrado' }
 
-  const user = { name: name.trim(), email: cleanEmail, password, role: ROLES.DUENO }
+  // 2. Le asignamos un ID único al usuario (usando Date.now())
+  const user = { id: Date.now().toString(), name: name.trim(), email: cleanEmail, password, role: ROLES.DUENO }
+
   localStorage.setItem(USERS_KEY, JSON.stringify([...loadRegistered(), user]))
   return { ok: true, user }
+}
+
+// 3. Función para que el Admin pueda borrar (protegiendo a los usuarios base)
+export const deleteUser = (id) => {
+  // Verificamos que no sea uno de los usuarios base del sistema
+  if (SEED_USERS.some(u => u.id === id)) {
+    return { ok: false, error: 'No puedes eliminar a los usuarios base del sistema.' }
+  }
+
+  // Filtramos para dejar a todos menos al que queremos borrar
+  const registered = loadRegistered().filter(u => u.id !== id)
+  localStorage.setItem(USERS_KEY, JSON.stringify(registered))
+  return { ok: true }
 }

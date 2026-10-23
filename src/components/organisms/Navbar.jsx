@@ -1,8 +1,7 @@
-import { useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate, NavLink, Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { ROLE_HOME } from '../../data/roles'
 import { Button } from '../atoms/Button'
-import { Link } from '../atoms/Link'
 
 export default function Navbar() {
   const { user, logout } = useAuth()
@@ -20,7 +19,8 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg bg-white sticky-top shadow-sm">
       <div className="container d-flex justify-content-between align-items-center">
 
-        <Link href="/" onNavigate={navigate} className="fs-5 fw-bold text-success text-decoration-none">
+        {/* Logo - Usando el Link de React Router */}
+        <Link to="/" className="fs-5 fw-bold text-success text-decoration-none">
           🐾 Veterinaria San Marcos
         </Link>
 
@@ -29,7 +29,7 @@ export default function Navbar() {
           <NavLink to="/servicios" className="text-dark text-decoration-none">Servicios</NavLink>
           <NavLink to="/contacto" className="text-dark text-decoration-none">Contacto</NavLink>
 
-          {/* BOTÓN AGENDAR CITA: Siempre visible, inteligente */}
+          {/* BOTÓN AGENDAR CITA */}
           <NavLink
             to={rutaAgendar}
             className="btn btn-primary btn-sm text-white text-decoration-none"
@@ -39,8 +39,9 @@ export default function Navbar() {
 
           {user ? (
             <>
+              {/* BOTÓN MI PANEL */}
               <NavLink
-                to={ROLE_HOME[user.role] ?? '/dueno'}
+                to={ROLE_HOME[user.role] ?? '/'}
                 className="btn btn-outline-success btn-sm"
               >
                 Mi Panel

@@ -8,7 +8,7 @@ import TableCell from '../atoms/TableCell'
 import { Button } from '../atoms/Button'
 import SpeciesBadge from '../atoms/SpeciesBadge'
 import AppointmentStatusBadge from '../atoms/AppointmentStatusBadge'
-import { formatDate } from '../../utils/format'
+import { formatDate } from '../../utils/formatDate'
 
 function AppointmentRow(props) {
     const cita = props.appointment
