@@ -1,7 +1,7 @@
-import { useTituloPagina } from "../../hooks/useTituloPagina"
+import { usePageTitle } from "../../hooks/usePageTitle"
 
 export function HomeTemplate(props) {
-  useTituloPagina(props.title || 'Inicio')
+  usePageTitle(props.title || 'Inicio')
 
   return (
     <div>

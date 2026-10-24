@@ -11,34 +11,40 @@ import { AppointmentStatusBadge } from '../atoms/AppointmentStatusBadge'
 import { formatDate } from '../../utils/formatDate'
 
 export function AppointmentRow(props) {
-    const cita = props.appointment
-    const mascota = props.mascota //  llega por prop; puede ser null
+    const appointment = props.appointment
+    const pet = props.pet ?? props.mascota
     const hasActions = props.onConfirm || props.onReschedule || props.onCancel
-    const isClosed = cita.estado === 'cancelada' //  estado real
+    const status = appointment?.status ?? appointment?.estado
+    const isClosed = status === 'cancelled' || status === 'cancelada'
+    const petName = pet?.name ?? pet?.nombre ?? '—'
+    const petSpecies = pet?.species ?? pet?.especie
+    const appointmentType = appointment?.type ?? appointment?.tipo
+    const appointmentDate = appointment?.date ?? appointment?.fecha
+    const appointmentTime = appointment?.time ?? appointment?.hora
 
     return (
         <tr>
-            {props.showOwner && <TableCell>{cita.duenoEmail}</TableCell>}
+            {props.showOwner && <TableCell>{appointment?.duenoEmail}</TableCell>}
             <TableCell>
-                {mascota?.nombre ?? '—'}{' '}
-                {mascota?.especie && <SpeciesBadge species={mascota.especie} />}
+                {petName}{' '}
+                {petSpecies && <SpeciesBadge species={petSpecies} />}
             </TableCell>
-            <TableCell>{cita.tipo}</TableCell>
+            <TableCell>{appointmentType}</TableCell>
             <TableCell>
-                {formatDate(cita.fecha)} {cita.hora}
+                {formatDate(appointmentDate)} {appointmentTime}
             </TableCell>
             <TableCell>
-                <AppointmentStatusBadge status={cita.estado} />
+                <AppointmentStatusBadge status={status} />
             </TableCell>
             {hasActions && (
                 <TableCell className="text-nowrap">
                     {!isClosed && (
                         <div className="d-flex flex-wrap gap-1">
-                            {cita.estado !== 'confirmada' && (
+                            {status !== 'confirmed' && status !== 'confirmada' && (
                                 <Button
                                     size="sm"
                                     variant="success"
-                                    onClick={() => props.onConfirm(cita.id)}
+                                    onClick={() => props.onConfirm(appointment.id)}
                                 >
                                     Confirmar
                                 </Button>
@@ -46,14 +52,14 @@ export function AppointmentRow(props) {
                             <Button
                                 size="sm"
                                 variant="outline-primary"
-                                onClick={() => props.onReschedule(cita.id)}
+                                onClick={() => props.onReschedule(appointment.id)}
                             >
                                 Reagendar
                             </Button>
                             <Button
                                 size="sm"
                                 variant="outline-danger"
-                                onClick={() => props.onCancel(cita.id)}
+                                onClick={() => props.onCancel(appointment.id)}
                             >
                                 Cancelar
                             </Button>

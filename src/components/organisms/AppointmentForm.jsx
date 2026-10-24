@@ -4,7 +4,7 @@ import { Select }  from '../atoms/Select'
 import { Button } from '../atoms/Button'
 import { validationAppointment } from '../../utils/validationAppointment'
 
-const SERVICIOS = [
+const SERVICES = [
     { value: 'Control', label: 'Control' },
     { value: 'Vacunación', label: 'Vacunación' },
     { value: 'Exámenes', label: 'Exámenes' },
@@ -89,7 +89,7 @@ export function AppointmentForm(props) {
                         setService(e.target.value)
                         if (errors.service) setErrors((prev) => ({ ...prev, service: '' }))
                     }}
-                    options={SERVICIOS}
+                    options={SERVICES}
                     placeholder="Selecciona un servicio"
                     invalid={Boolean(errors.service)}
                     required

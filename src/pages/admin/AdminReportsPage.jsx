@@ -1,9 +1,10 @@
-import { useTituloPagina } from '../../hooks/useTituloPagina'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CrudSection } from '../../components/organisms/CrudSection'
 import { useStoredList } from '../../hooks/useStoredList'
-import { adminReports } from '../../data/adminReports' // Los datos que creamos antes
+import { adminReports } from '../../data/adminReports'
 import { formatDate } from '../../utils/formatDate'
+import { getAllUsers, deleteUser } from '../../services/userService' 
 
 const COLUMNS = [
     { key: 'name', header: 'Nombre del Reporte' },
@@ -20,7 +21,7 @@ const FIELDS = [
 ]
 
 export function AdminReportsPage() {
-    useTituloPagina('Reportes')
+    usePageTitle('Reportes')
     const reports = useStoredList('admin_reports', adminReports, 'id')
 
     return (

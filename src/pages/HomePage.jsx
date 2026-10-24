@@ -3,12 +3,12 @@ import { HomeTemplate } from '../components/templates/HomeTemplate'
 import { HeroSection } from '../components/organisms/HeroSection'
 import { ServiceCard } from '../components/organisms/ServiceCard'
 import { Footer } from '../components/organisms/Footer'
-import serviciosData  from '../data/servicios.json'
-import contactoData  from '../data/contacto.json'
+import servicesData  from '../data/services.json'
+import contactData  from '../data/contact.json'
 
 export function HomePage(props) {
-  const servicios = props.servicios ?? serviciosData
-  const contacto = props.contacto ?? contactoData
+  const services = props.services ?? props.servicios ?? servicesData
+  const contact = props.contact ?? props.contacto ?? contactData
 
   return (
     <MainLayout>
@@ -26,7 +26,7 @@ export function HomePage(props) {
                     title="Clínica Veterinaria"
                     subtitle="Bienvenidos a nuestra clínica San Marcos"
                   />
-                  <ServiceCard id="servicios" servicios={servicios} />
+                  <ServiceCard id="servicios" servicios={services} />
                 </>
               }
             />
@@ -34,7 +34,7 @@ export function HomePage(props) {
 
         </main>
 
-        <Footer id= "contacto" title="Información de contacto" items={contacto} />
+        <Footer id="contacto" title="Información de contacto" items={contact} />
       </div>
     </MainLayout>
   )

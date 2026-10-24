@@ -5,23 +5,20 @@ import { FooterNavGroup } from '../molecules/FooterNavGroup'
 import { Link } from 'react-router-dom'
 
 export function Footer(props) {
+    const { id, className, ...rest } = props
 
-    const { id, className, ...rest } = props; 
-
-    // Acepta "titulo" (preferido) o "title" (compatibilidad con HomePage actual)
-    const titulo = props.titulo ?? props.title ?? 'Clínica Veterinaria San Marcos'
-    const descripcion =
+    const title = props.title ?? props.titulo ?? 'Clínica Veterinaria San Marcos'
+    const description =
+        props.description ??
         props.descripcion ??
         'Cuidando la salud de tu mejor amigo con el mejor equipo profesional.'
 
-    // Acepta "contactos" o "items" (como lo pasa HomePage).
-    // Cada item puede ser { label, value?, href? } o { id, label, value?, href? }.
-    const contactos = props.contactos ?? props.items ?? [
+    const contacts = props.contacts ?? props.contactos ?? props.items ?? [
         { label: 'Teléfono', value: '+56 2 2345 6789', href: 'tel:+56223456789' },
         { label: 'Correo', value: 'info@clinica.com', href: 'mailto:info@clinica.com' },
     ]
 
-    const enlacesRapidos = props.enlacesRapidos ?? [
+    const quickLinks = props.quickLinks ?? props.enlacesRapidos ?? [
         { label: 'Inicio', to: '/' },
         { label: 'Servicios', to: '/servicios' },
         { label: 'Contacto', to: '/contacto' },
@@ -35,14 +32,14 @@ export function Footer(props) {
                     {/* Columna 1: Información de la clínica */}
                     <div className="col-lg-4 col-md-6 mb-4">
                         <Heading level={4} className="fw-bold mb-3">
-                            {titulo}
+                            {title}
                         </Heading>
-                        <Text className="text-white-50">{descripcion}</Text>
+                        <Text className="text-white-50">{description}</Text>
                     </div>
 
                     {/* Columna 2: Enlaces rápidos */}
                     <div className="col-lg-4 col-md-6 mb-4">
-                        <FooterNavGroup title="Enlaces Rápidos" links={enlacesRapidos} />
+                        <FooterNavGroup title="Enlaces Rápidos" links={quickLinks} />
                     </div>
 
                     {/* Columna 3: Contactos */}
@@ -51,8 +48,7 @@ export function Footer(props) {
                             Contactos
                         </Heading>
                         <ul className="list-unstyled">
-                            {contactos.map((item, index) => {
-                                // Preferimos mostrar "value" (el dato); si no, "label".
+                            {contacts.map((item, index) => {
                                 const display = item.value ?? item.label
                                 return (
                                     <li key={item.id ?? index} className="mb-2">

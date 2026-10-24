@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "duenoEmail": "dueno@test.com",
+    "petId": 1,
+    "date": "2026-10-22",
+    "time": "10:30",
+    "type": "Control",
+    "status": "pending"
+  }
+]

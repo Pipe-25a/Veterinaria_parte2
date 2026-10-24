@@ -1,15 +1,15 @@
 // Contacto del dueño: aporta los datos y el envío del correo; el layout lo pone el template.
 import { useAuth } from '../../context/AuthContext'
-import { useTituloPagina } from '../../hooks/useTituloPagina'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import { sendMessage } from '../../services/messageService'
-import  contactItems  from '../../data/contacto.json'
+import contactItems from '../../data/contact.json'
 import { ContactTemplate } from '../../components/templates/ContactTemplate'
 import { ContactInfo } from '../../components/organisms/ContactInfo'
 import { EmailForm } from '../../components/organisms/EmailForm'
 
 export function Contact() {
   const { user } = useAuth()
-  useTituloPagina('Contacto')
+  usePageTitle('Contacto')
 
   return (
     <ContactTemplate

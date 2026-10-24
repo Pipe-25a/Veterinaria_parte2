@@ -1,11 +1,11 @@
 const STATUS = {
-  pendiente: { text: 'Pendiente', color: 'warning' },
-  confirmada: { text: 'Confirmada', color: 'success' },
-  reagendada: { text: 'Reagendada', color: 'info' },
-  cancelada: { text: 'Cancelada', color: 'secondary' },
+  pending: { text: 'Pendiente', color: 'warning' },
+  confirmed: { text: 'Confirmada', color: 'success' },
+  rescheduled: { text: 'Reagendada', color: 'info' },
+  cancelled: { text: 'Cancelada', color: 'secondary' },
 }
 
 export function AppointmentStatusBadge(props) {
-  const info = STATUS[props.status] || STATUS.pendiente
+  const info = STATUS[props.status] || STATUS.pending
   return <span className={`badge text-bg-${info.color}`}>{info.text}</span>
 }

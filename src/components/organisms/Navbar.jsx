@@ -13,7 +13,7 @@ export function Navbar() {
   }
 
   // Ruta de agendar según si está logueado o no
-  const rutaAgendar = user ? '/appointment' : '/login'
+  const appointmentRoute = user ? '/appointment' : '/login'
 
   return (
     <nav className="navbar navbar-expand-lg bg-white sticky-top shadow-sm">
@@ -30,7 +30,7 @@ export function Navbar() {
           <a href="#contacto" className="text-dark text-decoration-none">Contacto</a>
           {/* BOTÓN AGENDAR CITA */}
           <NavLink
-            to={rutaAgendar}
+            to={appointmentRoute}
             className="btn btn-primary btn-sm text-white text-decoration-none"
           >
             Agendar Cita

@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "duenoEmail": "dueno@test.com",
+    "name": "Luna",
+    "species": "Perro",
+    "breed": "Labrador",
+    "age": 4
+  },
+  {
+    "id": 2,
+    "duenoEmail": "dueno@test.com",
+    "name": "Michi",
+    "species": "Gato",
+    "breed": "Siamés",
+    "age": 2
+  }
+]

@@ -35,7 +35,7 @@ export function CrudSection(props) {
     const tableColumns = [
         ...columns,
         {
-            key: 'acciones',
+            key: 'actions',
             header: 'Acciones',
             render: (_, row) => (
                 <div className="d-flex gap-1">

@@ -1,4 +1,0 @@
-[
-  { "id": 1, "duenoEmail": "dueno@test.com", "nombre": "Luna", "especie": "Perro", "raza": "Labrador", "edad": 4 },
-  { "id": 2, "duenoEmail": "dueno@test.com", "nombre": "Michi", "especie": "Gato", "raza": "Siamés", "edad": 2 }
-]

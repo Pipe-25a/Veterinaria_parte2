@@ -2,7 +2,7 @@ import { useAuth } from '../../context/AuthContext'
 import { PageHeader } from '../../components/molecules/PageHeader'
 import { QuickActions } from '../../components/organisms/QuickActions'
 import { useNavigate } from 'react-router-dom'
-import { useTituloPagina } from '../../hooks/useTituloPagina'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 const ACTIONS = [
     {
@@ -21,14 +21,14 @@ const ACTIONS = [
         title: 'Reportes',
         description: 'Visualiza los reportes y métricas de la clínica.',
         actionLabel: 'Ver Reportes',
-        href: '/admin/reportes' 
+        href: '/admin/reportes'
     },
 ]
 
 export function AdminHomePage() {
     const { user } = useAuth()
     const navigate = useNavigate()
-    useTituloPagina('Panel de Administración')
+    usePageTitle('Panel de Administración')
 
     return (
         <div>

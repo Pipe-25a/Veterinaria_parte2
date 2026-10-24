@@ -1,1 +1,0 @@
-//rehacer con props y atomos y moleculas

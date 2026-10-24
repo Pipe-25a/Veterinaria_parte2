@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "category": "Consultas",
+    "service": "Consulta general",
+    "price": 15000
+  },
+  {
+    "id": 2,
+    "category": "Consultas",
+    "service": "Control de cachorro",
+    "price": 12000
+  },
+  {
+    "id": 3,
+    "category": "Consultas",
+    "service": "Consulta de urgencia",
+    "price": 25000
+  },
+  {
+    "id": 4,
+    "category": "Vacunación",
+    "service": "Vacuna séxtuple canina",
+    "price": 18000
+  },
+  {
+    "id": 5,
+    "category": "Vacunación",
+    "service": "Vacuna triple felina",
+    "price": 17000
+  },
+  {
+    "id": 6,
+    "category": "Vacunación",
+    "service": "Vacuna antirrábica",
+    "price": 10000
+  },
+  {
+    "id": 7,
+    "category": "Exámenes",
+    "service": "Hemograma",
+    "price": 14000
+  },
+  {
+    "id": 8,
+    "category": "Exámenes",
+    "service": "Radiografía",
+    "price": 25000
+  },
+  {
+    "id": 9,
+    "category": "Exámenes",
+    "service": "Ecografía",
+    "price": 30000
+  },
+  {
+    "id": 10,
+    "category": "Cirugía",
+    "service": "Esterilización de gata",
+    "price": 45000
+  },
+  {
+    "id": 11,
+    "category": "Cirugía",
+    "service": "Esterilización de perra",
+    "price": 60000
+  },
+  {
+    "id": 12,
+    "category": "Cirugía",
+    "service": "Limpieza dental",
+    "price": 55000
+  },
+  {
+    "id": 13,
+    "category": "Estética",
+    "service": "Baño y corte (perro pequeño)",
+    "price": 20000
+  },
+  {
+    "id": 14,
+    "category": "Estética",
+    "service": "Corte de uñas",
+    "price": 5000
+  }
+]

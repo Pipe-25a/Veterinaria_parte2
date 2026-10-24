@@ -1,7 +1,7 @@
 // Servicios del dueño: aporta los datos y las columnas; el layout lo pone el template.
-import { useTituloPagina } from '../../hooks/useTituloPagina'
-import  servicios  from '../../data/servicios.json'
-import  medicamentos  from '../../data/medicamentos.json'
+import { usePageTitle } from '../../hooks/usePageTitle'
+import services from '../../data/services.json'
+import medications from '../../data/medications.json'
 import { Price } from '../../components/atoms/Price'
 import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CatalogTable } from '../../components/organisms/CatalogTable'
@@ -9,20 +9,20 @@ import { CatalogTable } from '../../components/organisms/CatalogTable'
 const renderPrice = (value) => <Price value={value} />
 
 const SERVICE_COLUMNS = [
-  { key: 'categoria', header: 'Categoría' },
-  { key: 'servicio', header: 'Servicio' },
-  { key: 'precio', header: 'Precio desde', className: 'text-end', render: renderPrice },
+  { key: 'category', header: 'Categoría' },
+  { key: 'service', header: 'Servicio' },
+  { key: 'price', header: 'Precio desde', className: 'text-end', render: renderPrice },
 ]
 
 const MEDICATION_COLUMNS = [
-  { key: 'nombre', header: 'Producto' },
-  { key: 'categoria', header: 'Categoría' },
-  { key: 'presentacion', header: 'Presentación' },
-  { key: 'precio', header: 'Precio', className: 'text-end', render: renderPrice },
+  { key: 'name', header: 'Producto' },
+  { key: 'category', header: 'Categoría' },
+  { key: 'presentation', header: 'Presentación' },
+  { key: 'price', header: 'Precio', className: 'text-end', render: renderPrice },
 ]
 
 export function Services() {
-  useTituloPagina('Servicios y productos')
+  usePageTitle('Servicios y productos')
 
   return (
     <CatalogTemplate
@@ -33,13 +33,13 @@ export function Services() {
         title="Servicios"
         description="Valores referenciales, pueden variar según la mascota."
         columns={SERVICE_COLUMNS}
-        rows={servicios}
+        rows={services}
       />
       <CatalogTable
         title="Medicamentos y productos"
         description="Disponibilidad sujeta a stock."
         columns={MEDICATION_COLUMNS}
-        rows={medicamentos}
+        rows={medications}
       />
     </CatalogTemplate>
   )

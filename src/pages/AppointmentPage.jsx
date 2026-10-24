@@ -3,12 +3,12 @@ import { AuthTemplate } from '../components/templates/AuthTemplate'
 import { AppointmentForm } from '../components/organisms/AppointmentForm'
 import { Button } from '../components/atoms/Button'
 import { useAuth } from '../context/AuthContext'
-import { agendarCita } from '../services/citaService'
-import { getMascotasByDueno } from '../services/mascotaService'
-import { useTituloPagina } from '../hooks/useTituloPagina'
+import { bookAppointment } from '../services/appointmentService'
+import { getPetsByDueno } from '../services/petService'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export function AppointmentPage() {
-    useTituloPagina('Agendar cita')
+    usePageTitle('Agendar cita')
 
     const { user, logout } = useAuth()
     const [error, setError] = useState('')
@@ -20,23 +20,23 @@ export function AppointmentPage() {
         setSuccess('')
         setLoading(true)
 
-        const mascotas = getMascotasByDueno(user.email)
-        const mascota = mascotas.find(
-            (m) => m.nombre.toLowerCase() === data.petName.trim().toLowerCase()
+        const pets = getPetsByDueno(user.email)
+        const pet = pets.find(
+            (p) => (p.name || p.nombre || '').toLowerCase() === data.petName.trim().toLowerCase()
         )
 
-        if (!mascota) {
+        if (!pet) {
             setLoading(false)
             setError('La mascota no está registrada en tu cuenta')
             return { ok: false }
         }
 
-        const result = agendarCita({
+        const result = bookAppointment({
             duenoEmail: user.email,
-            mascotaId: mascota.id,
-            fecha: data.date,
-            hora: data.time,
-            tipo: data.service,
+            petId: pet.id,
+            date: data.date,
+            time: data.time,
+            type: data.service,
         })
 
         setLoading(false)
@@ -46,7 +46,7 @@ export function AppointmentPage() {
             return { ok: false }
         }
 
-        setSuccess(`Cita agendada para ${mascota.nombre} el ${data.date} a las ${data.time}.`)
+        setSuccess(`Cita agendada para ${pet.name || pet.nombre} el ${data.date} a las ${data.time}.`)
         return { ok: true }
     }
 
@@ -74,4 +74,3 @@ export function AppointmentPage() {
         </AuthTemplate>
     )
 }
-

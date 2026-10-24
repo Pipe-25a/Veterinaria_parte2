@@ -1,8 +1,8 @@
-import { useTituloPagina } from '../../hooks/useTituloPagina'
+import { usePageTitle } from '../../hooks/usePageTitle'
 import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CrudSection } from '../../components/organisms/CrudSection'
 import { useStoredList } from '../../hooks/useStoredList'
-import { getAllUsers, deleteUser } from '../../services/userService' // Usamos tu servicio
+import { getAllUsers, updateUser, deleteUser } from '../../services/userService'
 
 const COLUMNS = [
     { key: 'name', header: 'Nombre' },
@@ -17,7 +17,7 @@ const FIELDS = [
 ]
 
 export function AdminUsersPage() {
-    useTituloPagina('Gestión de Usuarios')
+    usePageTitle('Gestión de Usuarios')
 
     // Nota: Aquí idealmente usarías un getAllUsers en tiempo real. 
     // Como usamos el hook, le pasamos los usuarios base.

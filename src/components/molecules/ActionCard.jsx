@@ -11,9 +11,7 @@ export function ActionCard(props) {
   return (
     <div className={classes}>
       <div className="card-body d-flex flex-column text-center"> {/* text-center para el home */}
-        <Heading level={2} className="h5 m-0">
-          {title}
-        </Heading>
+        <Heading level={1} className="text-center">{props.title}</Heading>
 
         {description && (
           <Text tone="muted" className="flex-grow-1 mt-2">

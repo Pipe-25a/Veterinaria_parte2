@@ -43,7 +43,28 @@ export const registerUser = ({ name, email, password }) => {
   return { ok: true, user }
 }
 
-// 3. Función para que el Admin pueda borrar (protegiendo a los usuarios base)
+// 3. Función para que el Admin pueda actualizar
+// src/services/userService.js
+// ... al final, después de deleteUser
+
+export const updateUser = (id, data) => {
+  if (SEED_USERS.some((u) => u.id === id)) {
+    return { ok: false, error: 'No puedes editar los usuarios base del sistema.' }
+  }
+
+  const cleanEmail = data.email?.trim().toLowerCase()
+  if (cleanEmail && getAllUsers().some((u) => u.email === cleanEmail && u.id !== id)) {
+    return { ok: false, error: 'Ese correo ya está en uso' }
+  }
+
+  const registered = loadRegistered().map((u) =>
+    u.id === id ? { ...u, ...data, email: cleanEmail ?? u.email } : u
+  )
+  localStorage.setItem(USERS_KEY, JSON.stringify(registered))
+  return { ok: true }
+}
+
+// 4. Función para que el Admin pueda borrar (protegiendo a los usuarios base)
 export const deleteUser = (id) => {
   // Verificamos que no sea uno de los usuarios base del sistema
   if (SEED_USERS.some(u => u.id === id)) {
