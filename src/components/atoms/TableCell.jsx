@@ -1,5 +1,5 @@
 //Esto es para la tabla
-function TableCell(props) {
+export function TableCell(props) {
   const Tag = props.as ?? 'td'
   const className = props.className ?? ''
   const classes = ['table-cell', className].filter(Boolean).join(' ')
@@ -13,5 +13,3 @@ function TableCell(props) {
     </Tag>
   )
 }
-
-export default TableCell;

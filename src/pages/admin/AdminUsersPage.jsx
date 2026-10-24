@@ -16,7 +16,7 @@ const FIELDS = [
     { name: 'role', label: 'Rol', required: true }, // Aquí podrías usar el Select
 ]
 
-export default function AdminUsersPage() {
+export function AdminUsersPage() {
     useTituloPagina('Gestión de Usuarios')
 
     // Nota: Aquí idealmente usarías un getAllUsers en tiempo real. 

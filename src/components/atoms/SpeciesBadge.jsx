@@ -8,12 +8,10 @@ const SPECIES = {
   bird: "Ave",
 };
 
-function SpeciesBadge(props) {
+export function SpeciesBadge(props) {
   return (
     <span className="badge rounded-pill text-bg-light border">
       {SPECIES[props.species] || props.species}
     </span>
   )
 }
-
-export default SpeciesBadge

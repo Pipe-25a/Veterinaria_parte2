@@ -1,4 +1,4 @@
-import citasMock from '../data/citas.json'
+import  citasMock  from '../data/citas.json'
 import { getMascotaById } from './mascotaService'
 
 const KEY = 'citas'

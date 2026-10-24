@@ -1,6 +1,6 @@
 import { useTituloPagina } from "../../hooks/useTituloPagina"
 
-export default function HomeTemplate(props) {
+export function HomeTemplate(props) {
   useTituloPagina(props.title || 'Inicio')
 
   return (

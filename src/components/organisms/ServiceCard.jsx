@@ -2,7 +2,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Text } from '../atoms/Text'
 import { Table } from '../atoms/Tables' // 👈 Usamos tu átomo Table
 
-function ServiceCard(props) {
+export function ServiceCard(props) {
   // 1. Definimos las columnas que tendrá la tabla
   const columns = [
     { key: 'categoria', header: 'Categoría' },
@@ -29,11 +29,9 @@ function ServiceCard(props) {
         emptyText="No hay servicios disponibles"
       />
 
-      <RouterLink to="/servicios" className="btn btn-outline-primary">
+      {/*<RouterLink to="/servicios" className="btn btn-outline-primary">
         Catálogo completo
-      </RouterLink>
+      </RouterLink>*/}
     </section>
   )
 }
-
-export default ServiceCard

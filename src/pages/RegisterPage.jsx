@@ -1,7 +1,7 @@
-import AuthTemplate from '../components/templates/AuthTemplate'
-import RegisterForm from '../components/organisms/RegisterForm'
+import { AuthTemplate } from '../components/templates/AuthTemplate'
+import { RegisterForm } from '../components/organisms/RegisterForm'
 
-export default function RegisterPage() {
+export function RegisterPage() {
   return (
     <AuthTemplate
       title="Registro Clínica San Marcos"

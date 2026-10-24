@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import HomeTemplate from '../../components/templates/HomeTemplate'
+import { HomeTemplate } from '../../components/templates/HomeTemplate'
 import { QuickActions } from '../../components/organisms/QuickActions'
 
 const ACTIONS = [
@@ -9,7 +9,7 @@ const ACTIONS = [
   { title: 'Productos disponibles', description: 'Consulta el catálogo...', actionLabel: 'Ver catálogo', href: '/dueno/servicios' },
 ]
 
-export default function HomeDueno() {
+export function HomeDueno() {
   const { user } = useAuth()
   const navigate = useNavigate()
 

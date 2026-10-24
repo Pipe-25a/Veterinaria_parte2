@@ -1,44 +1,56 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export function useStoredList(storageKey, initialData, idKey = 'id') {
-    const [items, setItems] = useState([])
-
-    // Cargar datos al iniciar
-    useEffect(() => {
+    //  1. Inicializamos el estado leyendo del localStorage (esto lo tenías perfecto)
+    const [items, setItems] = useState(() => {
         const saved = localStorage.getItem(storageKey)
         if (saved) {
             try {
-                setItems(JSON.parse(saved))
+                return JSON.parse(saved)
             } catch {
-                setItems(initialData)
+                return initialData
             }
-        } else {
-            setItems(initialData)
-            localStorage.setItem(storageKey, JSON.stringify(initialData))
         }
-    }, [storageKey, initialData])
+        // Si no hay datos guardados, guardamos los iniciales y los retornamos
+        localStorage.setItem(storageKey, JSON.stringify(initialData))
+        return initialData
+    })
 
-    // Guardar en localStorage cada vez que cambie la lista
+    //  2. La función save se mantiene por si la necesitas usar directamente
     const save = (newItems) => {
         setItems(newItems)
         localStorage.setItem(storageKey, JSON.stringify(newItems))
     }
 
+    //  3. Funciones actualizadas para usar el estado previo (a prueba de balas)
     const add = (item) => {
         const newItem = { ...item, [idKey]: Date.now().toString() }
-        save([...items, newItem])
+        setItems((prevItems) => {
+            const updated = [...prevItems, newItem]
+            localStorage.setItem(storageKey, JSON.stringify(updated))
+            return updated
+        })
         return { ok: true, item: newItem }
     }
 
     const update = (id, updatedItem) => {
-        save(items.map((item) => (item[idKey] === id ? { ...item, ...updatedItem } : item)))
+        setItems((prevItems) => {
+            const updated = prevItems.map((item) => (item[idKey] === id ? { ...item, ...updatedItem } : item))
+            localStorage.setItem(storageKey, JSON.stringify(updated))
+            return updated
+        })
         return { ok: true }
     }
 
     const remove = (id) => {
-        save(items.filter((item) => item[idKey] !== id))
+        setItems((prevItems) => {
+            const updated = prevItems.filter((item) => item[idKey] !== id)
+            localStorage.setItem(storageKey, JSON.stringify(updated))
+            return updated
+        })
         return { ok: true }
     }
 
-    return { items, add, update, remove }
+    // ✅ 4. Retornamos todo para que tus componentes lo puedan usar
+    return { items, save, add, update, remove }
 }

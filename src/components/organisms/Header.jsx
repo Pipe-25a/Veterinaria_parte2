@@ -1,12 +1,10 @@
 // Componente de encabezado que se utiliza en la aplicación
 import React from "react";
 
-function Header() {
+export function Header() {
     return (
         <header>
             <h1></h1>
         </header>
     );
 }
-
-export default Header;

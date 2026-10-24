@@ -1,12 +1,12 @@
-import MainLayout from '../components/templates/MainLayout'
-import HomeTemplate from '../components/templates/HomeTemplate'
+import { MainLayout } from '../components/templates/MainLayout'
+import { HomeTemplate } from '../components/templates/HomeTemplate'
 import { HeroSection } from '../components/organisms/HeroSection'
-import ServiceCard from '../components/organisms/ServiceCard'
+import { ServiceCard } from '../components/organisms/ServiceCard'
 import { Footer } from '../components/organisms/Footer'
-import serviciosData from '../data/servicios.json'
-import contactoData from '../data/contacto.json'
+import serviciosData  from '../data/servicios.json'
+import contactoData  from '../data/contacto.json'
 
-function HomePage(props) {
+export function HomePage(props) {
   const servicios = props.servicios ?? serviciosData
   const contacto = props.contacto ?? contactoData
 
@@ -26,7 +26,7 @@ function HomePage(props) {
                     title="Clínica Veterinaria"
                     subtitle="Bienvenidos a nuestra clínica San Marcos"
                   />
-                  <ServiceCard servicios={servicios} />
+                  <ServiceCard id="servicios" servicios={servicios} />
                 </>
               }
             />
@@ -34,10 +34,8 @@ function HomePage(props) {
 
         </main>
 
-        <Footer title="Información de contacto" items={contacto} />
+        <Footer id= "contacto" title="Información de contacto" items={contacto} />
       </div>
     </MainLayout>
   )
 }
-
-export default HomePage;

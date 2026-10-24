@@ -37,5 +37,3 @@ export const validationAppointment = ({ petName, date, time, service }) => {
         isValid: Object.keys(errors).length === 0,
     };
 };
-
-export default validationAppointment

@@ -1,6 +1,6 @@
-import Navbar from "../organisms/Navbar";
+import { Navbar } from "../organisms/Navbar";
 
-export default function MainLayout({ children }) {
+export function MainLayout({ children }) {
   return (
     <>
       <Navbar />

@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 
-const Sidebar = ({ links }) => (
+export const Sidebar = ({ links }) => (
   <nav className="nav flex-column nav-pills p-3 bg-light h-100">
     {/* Links del menú */}
     {links.map((l) => (
@@ -22,4 +22,3 @@ const Sidebar = ({ links }) => (
   </nav>
 );
 
-export default Sidebar;

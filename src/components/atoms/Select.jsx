@@ -14,7 +14,7 @@ const toOption = (option) =>
     ? option
     : { value: option, label: option }
 
-function Select(props) {
+export function Select(props) {
   const options = props.options ?? []
   const placeholder = props.placeholder
   const size = props.size ?? null
@@ -53,5 +53,3 @@ function Select(props) {
     </select>
   )
 }
-
-export default Select

@@ -1,15 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { ROLE_HOME } from './data/roles'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import DuenoDashboard from './pages/dueno/DuenoDashboard'
-import ProtectedRoute from './components/ProtectedRoute'
-import AppointmentPage from './pages/AppointmentPage'
-import AdminDashboard from './pages/admin/AdminDashboard'
+import { HomePage } from './pages/HomePage'
+import { LoginPage } from './pages/LoginPage'
+import { RegisterPage } from './pages/RegisterPage'
+import { DuenoDashboard } from './pages/dueno/DuenoDashboard'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { AppointmentPage } from './pages/AppointmentPage'
+import { AdminDashboard } from './pages/admin/AdminDashboard'
 
-function App() {
+export function App() {
   const { user } = useAuth()
 
   // Ruta a la que va un usuario logueado (para redirigirlo si intenta ir a /login)
@@ -64,5 +64,3 @@ function App() {
     </Routes>
   )
 }
-
-export default App

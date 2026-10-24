@@ -3,7 +3,7 @@ import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CrudSection } from '../../components/organisms/CrudSection'
 import { useStoredList } from '../../hooks/useStoredList'
 import { adminReports } from '../../data/adminReports' // Los datos que creamos antes
-import formatDate from '../../utils/formatDate'
+import { formatDate } from '../../utils/formatDate'
 
 const COLUMNS = [
     { key: 'name', header: 'Nombre del Reporte' },
@@ -19,7 +19,7 @@ const FIELDS = [
     { name: 'reportedBy', label: 'Reportado por', required: true },
 ]
 
-export default function AdminReportsPage() {
+export function AdminReportsPage() {
     useTituloPagina('Reportes')
     const reports = useStoredList('admin_reports', adminReports, 'id')
 

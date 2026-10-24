@@ -25,7 +25,7 @@ const ACTIONS = [
     },
 ]
 
-export default function AdminHomePage() {
+export function AdminHomePage() {
     const { user } = useAuth()
     const navigate = useNavigate()
     useTituloPagina('Panel de Administración')

@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { Heading } from '../atoms/Heading'
 import { Text } from '../atoms/Text'
 
-function AuthTemplate(props) {
+export function AuthTemplate(props) {
     return (
         <Container className="py-5">
             <Row className="justify-content-center">
@@ -37,6 +37,5 @@ function AuthTemplate(props) {
     )
 }
 
-export default AuthTemplate
 
 

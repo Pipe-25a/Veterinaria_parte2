@@ -2,8 +2,8 @@ import { useTituloPagina } from '../../hooks/useTituloPagina'
 import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CatalogTable } from '../../components/organisms/CatalogTable'
 import { Price } from '../../components/atoms/Price'
-import serviciosData from '../../data/servicios.json'
-import medicamentosData from '../../data/medicamentos.json'
+import  serviciosData  from '../../data/servicios.json'
+import  medicamentosData  from '../../data/medicamentos.json'
 
 // Formateador de precios usando tu átomo
 const renderPrice = (value) => <Price value={value} />
@@ -21,7 +21,7 @@ const MEDICATION_COLUMNS = [
     { key: 'precio', header: 'Precio', className: 'text-end', render: renderPrice },
 ]
 
-export default function AdminCatalogPage() {
+export function AdminCatalogPage() {
     useTituloPagina('Gestión de Catálogo')
 
     return (

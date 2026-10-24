@@ -5,7 +5,7 @@ import { Button } from '../atoms/Button'
 import { useAuth } from '../../context/AuthContext'
 import { validationRegister } from '../../utils/validationRegister'
 
-function RegisterForm() {
+export function RegisterForm() {
     const { register } = useAuth()
     const navigate = useNavigate()
     const [name, setName] = useState('')
@@ -80,5 +80,3 @@ function RegisterForm() {
         </form>
     )
 }
-
-export default RegisterForm

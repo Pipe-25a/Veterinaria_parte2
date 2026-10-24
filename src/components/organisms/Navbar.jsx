@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import { ROLE_HOME } from '../../data/roles'
 import { Button } from '../atoms/Button'
 
-export default function Navbar() {
+export function Navbar() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -25,10 +25,9 @@ export default function Navbar() {
         </Link>
 
         <div className="d-flex align-items-center gap-3">
-          <NavLink to="/" className="text-dark text-decoration-none">Inicio</NavLink>
-          <NavLink to="/servicios" className="text-dark text-decoration-none">Servicios</NavLink>
-          <NavLink to="/contacto" className="text-dark text-decoration-none">Contacto</NavLink>
-
+          <a href="#top" className="text-dark text-decoration-none">Inicio</a>
+          <a href="#servicios" className="text-dark text-decoration-none">Servicios</a>
+          <a href="#contacto" className="text-dark text-decoration-none">Contacto</a>
           {/* BOTÓN AGENDAR CITA */}
           <NavLink
             to={rutaAgendar}

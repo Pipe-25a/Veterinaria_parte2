@@ -4,13 +4,13 @@
 // Recibe la cita en el esquema real del servicio (fecha/hora/tipo/estado/duenoEmail)
 // y la mascota ya resuelta por prop (nombre/especie). No consulta servicios.
 // Los botones de acción solo aparecen si llegan los handlers por props.
-import TableCell from '../atoms/TableCell'
+import { TableCell } from '../atoms/TableCell'
 import { Button } from '../atoms/Button'
-import SpeciesBadge from '../atoms/SpeciesBadge'
-import AppointmentStatusBadge from '../atoms/AppointmentStatusBadge'
+import { SpeciesBadge } from '../atoms/SpeciesBadge'
+import { AppointmentStatusBadge } from '../atoms/AppointmentStatusBadge'
 import { formatDate } from '../../utils/formatDate'
 
-function AppointmentRow(props) {
+export function AppointmentRow(props) {
     const cita = props.appointment
     const mascota = props.mascota //  llega por prop; puede ser null
     const hasActions = props.onConfirm || props.onReschedule || props.onCancel
@@ -64,5 +64,3 @@ function AppointmentRow(props) {
         </tr>
     )
 }
-
-export default AppointmentRow

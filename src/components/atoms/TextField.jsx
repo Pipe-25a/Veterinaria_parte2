@@ -1,5 +1,5 @@
 // Átomo: input de una línea (texto, email, password, number, date...)
-function TextField(props) {
+export function TextField(props) {
   return (
     <input
       id={props.id}
@@ -13,4 +13,3 @@ function TextField(props) {
   );
 }
 
-export default TextField;

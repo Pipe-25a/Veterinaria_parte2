@@ -5,7 +5,7 @@ import { Button } from '../atoms/Button'
 import { useAuth } from '../../context/AuthContext'
 import { validationLogin } from '../../utils/validationLogin'
 
-function LoginForm() {
+export function LoginForm() {
     const { login } = useAuth()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
@@ -67,5 +67,3 @@ function LoginForm() {
         </form>
     )
 }
-
-export default LoginForm

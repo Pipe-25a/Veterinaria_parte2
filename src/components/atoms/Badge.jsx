@@ -20,4 +20,3 @@ export function Badge(props) {
 
   return <span className={classes}>{props.children}</span>
 }
-//revisar

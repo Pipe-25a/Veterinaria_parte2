@@ -5,6 +5,9 @@ import { FooterNavGroup } from '../molecules/FooterNavGroup'
 import { Link } from 'react-router-dom'
 
 export function Footer(props) {
+
+    const { id, className, ...rest } = props; 
+
     // Acepta "titulo" (preferido) o "title" (compatibilidad con HomePage actual)
     const titulo = props.titulo ?? props.title ?? 'Clínica Veterinaria San Marcos'
     const descripcion =
@@ -26,7 +29,7 @@ export function Footer(props) {
     ]
 
     return (
-        <footer className="bg-success text-white pt-5 pb-4 mt-auto">
+        <footer id={id} className="bg-success text-white pt-5 pb-4 mt-auto">
             <div className="container">
                 <div className="row">
                     {/* Columna 1: Información de la clínica */}

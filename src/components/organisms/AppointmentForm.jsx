@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FormField } from '../molecules/FormField'
-import Select  from '../atoms/Select'
+import { Select }  from '../atoms/Select'
 import { Button } from '../atoms/Button'
 import { validationAppointment } from '../../utils/validationAppointment'
 
@@ -12,7 +12,7 @@ const SERVICIOS = [
     { value: 'Estética', label: 'Estética' },
 ]
 
-function AppointmentForm(props) {
+export function AppointmentForm(props) {
     const [petName, setPetName] = useState('')
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
@@ -105,5 +105,3 @@ function AppointmentForm(props) {
         </form>
     )
 }
-
-export default AppointmentForm

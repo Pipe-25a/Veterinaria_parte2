@@ -4,6 +4,7 @@
 import { Text } from '../atoms/Text'
 import { Image } from '../atoms/Image'
 import { Label } from '../atoms/Label'
+
 export function Card(props) {
   const { label, text, image, className = '', children } = props
   const title = props.title ?? ''

@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import AuthTemplate from '../components/templates/AuthTemplate'
-import AppointmentForm from '../components/organisms/AppointmentForm'
+import { AuthTemplate } from '../components/templates/AuthTemplate'
+import { AppointmentForm } from '../components/organisms/AppointmentForm'
 import { Button } from '../components/atoms/Button'
 import { useAuth } from '../context/AuthContext'
 import { agendarCita } from '../services/citaService'
 import { getMascotasByDueno } from '../services/mascotaService'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 
-function AppointmentPage() {
+export function AppointmentPage() {
     useTituloPagina('Agendar cita')
 
     const { user, logout } = useAuth()
@@ -75,4 +75,3 @@ function AppointmentPage() {
     )
 }
 
-export default AppointmentPage

@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Sidebar from '../../components/organisms/Sidebar'
+import { Sidebar } from '../../components/organisms/Sidebar'
 import { DashboardTemplate } from '../../components/templates/DashboardTemplate'
-import HomeDueno from './HomeDueno'
-import Contact from './Contact'
-import Services from './Services'
-import AppointmentPage from '../AppointmentPage'
+import { HomeDueno } from './HomeDueno'
+import { Contact } from './Contact'
+import { Services } from './Services'
+import { AppointmentPage } from '../AppointmentPage'
 
 const LINKS = [
   { to: '/dueno', label: 'Inicio', end: true },
@@ -13,7 +13,7 @@ const LINKS = [
   { to: '/dueno/servicios', label: 'Servicios y productos' },
 ]
 
-const DuenoDashboard = () => (
+export const DuenoDashboard = () => (
   <DashboardTemplate sidebar={<Sidebar links={LINKS} />}>
     <Routes>
       <Route index element={<HomeDueno />} />
@@ -24,5 +24,3 @@ const DuenoDashboard = () => (
     </Routes>
   </DashboardTemplate>
 )
-
-export default DuenoDashboard

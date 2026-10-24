@@ -1,7 +1,7 @@
 // Servicios del dueño: aporta los datos y las columnas; el layout lo pone el template.
 import { useTituloPagina } from '../../hooks/useTituloPagina'
-import servicios from '../../data/servicios.json'
-import medicamentos from '../../data/medicamentos.json'
+import  servicios  from '../../data/servicios.json'
+import  medicamentos  from '../../data/medicamentos.json'
 import { Price } from '../../components/atoms/Price'
 import { CatalogTemplate } from '../../components/templates/CatalogTemplate'
 import { CatalogTable } from '../../components/organisms/CatalogTable'
@@ -21,7 +21,7 @@ const MEDICATION_COLUMNS = [
   { key: 'precio', header: 'Precio', className: 'text-end', render: renderPrice },
 ]
 
-export default function Services() {
+export function Services() {
   useTituloPagina('Servicios y productos')
 
   return (

@@ -5,9 +5,7 @@ const STATUS = {
   cancelada: { text: 'Cancelada', color: 'secondary' },
 }
 
-function AppointmentStatusBadge(props) {
+export function AppointmentStatusBadge(props) {
   const info = STATUS[props.status] || STATUS.pendiente
   return <span className={`badge text-bg-${info.color}`}>{info.text}</span>
 }
-
-export default AppointmentStatusBadge

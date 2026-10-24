@@ -1,4 +1,4 @@
-import mascotasMock from '../data/mascotas.json';
+import mascotasMock  from '../data/mascotas.json';
 
 const KEY = 'mascotas';
 

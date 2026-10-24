@@ -2,12 +2,12 @@
 import { useAuth } from '../../context/AuthContext'
 import { useTituloPagina } from '../../hooks/useTituloPagina'
 import { sendMessage } from '../../services/messageService'
-import contactItems from '../../data/contacto.json'
+import  contactItems  from '../../data/contacto.json'
 import { ContactTemplate } from '../../components/templates/ContactTemplate'
 import { ContactInfo } from '../../components/organisms/ContactInfo'
 import { EmailForm } from '../../components/organisms/EmailForm'
 
-export default function Contact() {
+export function Contact() {
   const { user } = useAuth()
   useTituloPagina('Contacto')
 
