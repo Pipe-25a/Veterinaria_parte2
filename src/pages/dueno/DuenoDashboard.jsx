@@ -4,10 +4,12 @@ import { DashboardTemplate } from '../../components/templates/DashboardTemplate'
 import { HomeDueno } from './HomeDueno'
 import { Contact } from './Contact'
 import { Services } from './Services'
+import { MyAppointments } from './MyAppointments'
 import { AppointmentPage } from '../AppointmentPage'
 
 const LINKS = [
   { to: '/dueno', label: 'Inicio', end: true },
+  { to: '/dueno/citas', label: 'Mis citas' },  
   { to: '/dueno/citas/nueva', label: 'Agendar cita' },
   { to: '/dueno/contacto', label: 'Contacto' },
   { to: '/dueno/servicios', label: 'Servicios y productos' },
@@ -17,6 +19,7 @@ export const DuenoDashboard = () => (
   <DashboardTemplate sidebar={<Sidebar links={LINKS} />}>
     <Routes>
       <Route index element={<HomeDueno />} />
+      <Route path="citas" element={<MyAppointments />} />
       <Route path="citas/nueva" element={<AppointmentPage />} />
       <Route path="contacto" element={<Contact />} />
       <Route path="servicios" element={<Services />} />

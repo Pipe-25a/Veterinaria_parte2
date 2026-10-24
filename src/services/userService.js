@@ -49,7 +49,7 @@ export const registerUser = ({ name, email, password }) => {
 
 export const updateUser = (id, data) => {
   if (SEED_USERS.some((u) => u.id === id)) {
-    return { ok: false, error: 'No puedes editar los usuarios base del sistema.' }
+    return { ok: false, error: 'No puedes editar a los usuarios base del sistema.' }
   }
 
   const cleanEmail = data.email?.trim().toLowerCase()
@@ -58,12 +58,18 @@ export const updateUser = (id, data) => {
   }
 
   const registered = loadRegistered().map((u) =>
-    u.id === id ? { ...u, ...data, email: cleanEmail ?? u.email } : u
+    u.id === id
+      ? {
+        ...u,
+        ...data,
+        name: data.name?.trim() ?? u.name,
+        email: cleanEmail ?? u.email,
+      }
+      : u
   )
   localStorage.setItem(USERS_KEY, JSON.stringify(registered))
   return { ok: true }
 }
-
 // 4. Función para que el Admin pueda borrar (protegiendo a los usuarios base)
 export const deleteUser = (id) => {
   // Verificamos que no sea uno de los usuarios base del sistema

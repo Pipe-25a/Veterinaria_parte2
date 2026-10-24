@@ -7,6 +7,7 @@ const TONES = {
   warning: 'text-bg-warning',
   danger: 'text-bg-danger',
   info: 'text-bg-info',
+  light: 'text-bg-light',
 }
 
 export function Badge(props) {

@@ -5,6 +5,7 @@ import { QuickActions } from '../../components/organisms/QuickActions'
 
 const ACTIONS = [
   { title: 'Agendar cita', description: 'Reserva una hora...', actionLabel: 'Agendar cita', href: '/dueno/citas/nueva' },
+  { title: 'Mis citas', description: 'Revisa el estado de tus citas...', actionLabel: 'Ver mis citas', href: '/dueno/citas' },
   { title: 'Información de contacto', description: 'Revisa nuestros datos...', actionLabel: 'Ver contacto', href: '/dueno/contacto' },
   { title: 'Productos disponibles', description: 'Consulta el catálogo...', actionLabel: 'Ver catálogo', href: '/dueno/servicios' },
 ]

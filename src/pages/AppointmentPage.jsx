@@ -4,7 +4,7 @@ import { AppointmentForm } from '../components/organisms/AppointmentForm'
 import { Button } from '../components/atoms/Button'
 import { useAuth } from '../context/AuthContext'
 import { bookAppointment } from '../services/appointmentService'
-import { getPetsByDueno } from '../services/petService'
+import { getPetsByDueno, addPet } from '../services/petService'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 export function AppointmentPage() {
@@ -21,14 +21,27 @@ export function AppointmentPage() {
         setLoading(true)
 
         const pets = getPetsByDueno(user.email)
-        const pet = pets.find(
+        let pet = pets.find(
             (p) => (p.name || p.nombre || '').toLowerCase() === data.petName.trim().toLowerCase()
         )
 
+        // ✅ NUEVO: si la mascota no existe, la creamos automáticamente
         if (!pet) {
-            setLoading(false)
-            setError('La mascota no está registrada en tu cuenta')
-            return { ok: false }
+            const created = addPet({
+                duenoEmail: user.email,
+                name: data.petName.trim(),
+                species: data.species,
+                breed: '',
+                age: 0,
+            })
+
+            if (!created.ok) {
+                setLoading(false)
+                setError(created.error || 'No se pudo registrar la mascota')
+                return { ok: false }
+            }
+
+            pet = created.pet
         }
 
         const result = bookAppointment({

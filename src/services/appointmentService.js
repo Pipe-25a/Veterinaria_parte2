@@ -81,3 +81,30 @@ export const updateAppointmentStatus = (id, newStatus) => {
   saveAppointments(appointments)
   return { ok: true, appointment: appointments[index], cita: appointments[index] }
 }
+
+// función específica para reagendar (cambia fecha, hora y estado)
+export const rescheduleAppointment = (id, newDate, newTime) => {
+  const appointments = readAppointments()
+  const index = appointments.findIndex((app) => app.id === id)
+
+  if (index === -1) return { ok: false, error: 'Cita no encontrada' }
+
+  // Actualizamos la fecha, hora y el estado
+  appointments[index] = {
+    ...appointments[index],
+    date: newDate,
+    time: newTime,
+    status: APPOINTMENT_STATUS.RESCHEDULED // o 'rescheduled'
+  }
+
+  saveAppointments(appointments)
+  return { ok: true, appointment: appointments[index] }
+}
+
+export const getAllAppointments = () => {
+  const appointments = readAppointments()
+  // Las ordenamos por fecha y hora
+  return appointments.sort((a, b) =>
+    `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`)
+  )
+}

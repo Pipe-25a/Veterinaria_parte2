@@ -1,17 +1,17 @@
-//import Icon from "./Icon";
+import { Badge } from './Badge'
 
-// Átomo: etiqueta con la especie de la mascota
+// Átomo: etiqueta con la especie de la mascota.
 const SPECIES = {
-  dog: "Perro",
-  cat: "Gato",
-  rabbit: "Conejo",
-  bird: "Ave",
-};
+  dog: 'Perro',
+  cat: 'Gato',
+  rabbit: 'Conejo',
+  bird: 'Ave',
+}
 
 export function SpeciesBadge(props) {
   return (
-    <span className="badge rounded-pill text-bg-light border">
+    <Badge tone="light" pill className="border">
       {SPECIES[props.species] || props.species}
-    </span>
+    </Badge>
   )
 }

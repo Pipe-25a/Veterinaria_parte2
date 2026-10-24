@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FormField } from '../molecules/FormField'
-import { Select }  from '../atoms/Select'
+import { Select } from '../atoms/Select'
 import { Button } from '../atoms/Button'
 import { validationAppointment } from '../../utils/validationAppointment'
 
@@ -12,8 +12,16 @@ const SERVICES = [
     { value: 'Estética', label: 'Estética' },
 ]
 
+const SPECIES = [
+    { value: 'dog', label: 'Perro' },
+    { value: 'cat', label: 'Gato' },
+    { value: 'rabbit', label: 'Conejo' },
+    { value: 'bird', label: 'Ave' },
+]
+
 export function AppointmentForm(props) {
     const [petName, setPetName] = useState('')
+    const [species, setSpecies] = useState('')      // ← NUEVO
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
     const [service, setService] = useState('')
@@ -22,14 +30,17 @@ export function AppointmentForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const result = validationAppointment({ petName, date, time, service })
+        // Pasamos species a la validación (extenderemos validationAppointment)
+        const result = validationAppointment({ petName, species, date, time, service })
         setErrors(result.errors)
         if (!result.isValid) return
 
-        const response = props.onSubmit({ petName, date, time, service })
+        // Incluimos species en el onSubmit para que AppointmentPage la use
+        const response = props.onSubmit({ petName, species, date, time, service })
 
         if (response?.ok) {
             setPetName('')
+            setSpecies('')
             setDate('')
             setTime('')
             setService('')
@@ -53,6 +64,28 @@ export function AppointmentForm(props) {
                 }}
                 error={errors.petName}
             />
+
+            {/* NUEVO: especie, para poder crear la mascota si no existe */}
+            <div className="mb-3">
+                <label htmlFor="species" className="form-label">
+                    Especie <span className="text-danger ms-1">*</span>
+                </label>
+                <Select
+                    id="species"
+                    value={species}
+                    onChange={(e) => {
+                        setSpecies(e.target.value)
+                        if (errors.species) setErrors((prev) => ({ ...prev, species: '' }))
+                    }}
+                    options={SPECIES}
+                    placeholder="Selecciona una especie"
+                    invalid={Boolean(errors.species)}
+                    required
+                />
+                {errors.species && (
+                    <div className="invalid-feedback d-block">{errors.species}</div>
+                )}
+            </div>
 
             <FormField
                 id="date"
@@ -100,7 +133,7 @@ export function AppointmentForm(props) {
             </div>
 
             <Button type="submit" disabled={props.loading}>
-                {props.loading ? 'Agendando...' : 'Confirmar Cita'}
+                {props.loading ? 'Agendando...' : 'Agendar Cita'}
             </Button>
         </form>
     )
