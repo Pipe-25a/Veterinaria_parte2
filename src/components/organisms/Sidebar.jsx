@@ -1,15 +1,6 @@
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { NavLink, Link } from 'react-router-dom';
 
 export const Sidebar = ({ links }) => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();           // 1. Borra la sesión
-    navigate('/', { replace: true });      // 2. Te manda directo al HomePage (/)
-  };
-
   return (
     <nav className="nav flex-column nav-pills p-3 bg-light h-100">
       {/* Links del menú */}
@@ -34,9 +25,8 @@ export const Sidebar = ({ links }) => {
         to="/logout"
         className="btn btn-outline-danger btn-sm mt-3"
       >
-        🚪 Cerrar Sesión
+        Cerrar Sesión
       </Link>
-
     </nav>
   );
 };

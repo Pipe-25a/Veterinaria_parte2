@@ -52,7 +52,9 @@ export const updateUser = (id, data) => {
     return { ok: false, error: 'No puedes editar a los usuarios base del sistema.' }
   }
 
-  const cleanEmail = data.email?.trim().toLowerCase()
+  // ✅ FIX: si el email viene vacío o solo con espacios, lo tratamos como "no cambiar"
+  const cleanEmail = data.email?.trim().toLowerCase() || undefined
+
   if (cleanEmail && getAllUsers().some((u) => u.email === cleanEmail && u.id !== id)) {
     return { ok: false, error: 'Ese correo ya está en uso' }
   }
@@ -63,13 +65,14 @@ export const updateUser = (id, data) => {
         ...u,
         ...data,
         name: data.name?.trim() ?? u.name,
-        email: cleanEmail ?? u.email,
+        email: cleanEmail ?? u.email, // ✅ Ahora si cleanEmail es undefined, mantiene el anterior
       }
       : u
   )
   localStorage.setItem(USERS_KEY, JSON.stringify(registered))
   return { ok: true }
 }
+
 // 4. Función para que el Admin pueda borrar (protegiendo a los usuarios base)
 export const deleteUser = (id) => {
   // Verificamos que no sea uno de los usuarios base del sistema

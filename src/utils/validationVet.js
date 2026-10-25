@@ -3,7 +3,7 @@ export const validateVetHistory = (data = {}) => {
 
   const pet = String(data.pet ?? data.mascota ?? '').trim()
   const species = String(data.species ?? data.especie ?? '').trim()
-  const dueno = String(data.dueno ?? data.dueno ?? data.duenoEmail ?? data.nombreDueno ?? '').trim()
+  const dueno = String(data.dueno ?? data.duenoEmail ?? data.nombreDueno ?? '').trim()
   const type = String(data.type ?? data.tipo ?? '').trim()
   const date = String(data.date ?? data.fecha ?? '').trim()
 
@@ -22,7 +22,7 @@ export const validateVetRecord = (data = {}) => {
   const errors = {}
 
   const pet = String(data.pet ?? data.mascota ?? '').trim()
-  const dueno = String(data.dueno ?? data.dueno ?? data.duenoEmail ?? data.nombreDueno ?? '').trim()
+  const dueno = String(data.dueno ?? data.duenoEmail ?? data.nombreDueno ?? '').trim()
   const species = String(data.species ?? data.especie ?? '').trim()
   const condition = String(data.condition ?? data.condicion ?? '').trim()
   const rawAge = data.age ?? data.edad

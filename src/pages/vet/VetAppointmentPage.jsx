@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import { PageHeader } from '../../components/molecules/PageHeader'
 import { Table } from '../../components/atoms/Tables'
-import { Button } from '../../components/atoms/Button'
-import { AppointmentStatusBadge } from '../../components/atoms/AppointmentStatusBadge'
 import { Card, Alert } from 'react-bootstrap'
+import { AppointmentRow } from '../../components/molecules/AppointmentRow'
 import { getAllAppointments, updateAppointmentStatus } from '../../services/appointmentService'
 import { getPetById } from '../../services/petService'
 import { sendToHistory } from '../../services/vetService'
-import { formatDate } from '../../utils/formatDate'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import { useAuth } from '../../context/AuthContext'
 
@@ -30,15 +28,11 @@ export function VetAppointmentPage(props) {
 
     useEffect(() => {
         loadAppointments()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.appointments, props.citas])
 
     const handleConfirm = (id) => {
         const r = updateAppointmentStatus(id, 'confirmed')
-        if (!r.ok) {
-            setMessage({ text: r.error, type: 'danger' })
-            return
-        }
+        if (!r.ok) return setMessage({ text: r.error, type: 'danger' })
         setMessage({ text: 'Cita confirmada.', type: 'success' })
         loadAppointments()
     }
@@ -46,15 +40,13 @@ export function VetAppointmentPage(props) {
     const handleCancel = (id) => {
         if (!window.confirm('¿Cancelar esta cita?')) return
         const r = updateAppointmentStatus(id, 'cancelled')
-        if (!r.ok) {
-            setMessage({ text: r.error, type: 'danger' })
-            return
-        }
+        if (!r.ok) return setMessage({ text: r.error, type: 'danger' })
         setMessage({ text: 'Cita cancelada.', type: 'success' })
         loadAppointments()
     }
 
     const handleAttend = (app) => {
+        // app es el objeto completo que nos manda AppointmentRow
         sendToHistory(
             {
                 pet: app.pet?.name ?? '—',
@@ -70,53 +62,9 @@ export function VetAppointmentPage(props) {
         loadAppointments()
     }
 
-    const filtered =
-        statusFilter === 'all'
-            ? appointments
-            : appointments.filter((a) => a.status === statusFilter)
-
-    const COLUMNS = [
-        {
-            key: 'pet',
-            header: 'Mascota',
-            render: (pet) => pet?.name ?? '—',
-        },
-        { key: 'duenoEmail', header: 'Dueño' },
-        { key: 'type', header: 'Tipo' },
-        {
-            key: 'date',
-            header: 'Fecha',
-            render: (val, row) => `${formatDate(val)} ${row.time}`,
-        },
-        {
-            key: 'status',
-            header: 'Estado',
-            render: (val) => <AppointmentStatusBadge status={val} />,
-        },
-        {
-            key: 'actions',
-            header: 'Acciones',
-            render: (_, row) => {
-                const isClosed = row.status === 'cancelled' || row.status === 'cancelada'
-                if (isClosed) return <span className="text-muted">—</span>
-                return (
-                    <div className="d-flex flex-wrap gap-1">
-                        {row.status !== 'confirmed' && (
-                            <Button size="sm" variant="success" onClick={() => handleConfirm(row.id)}>
-                                Confirmar
-                            </Button>
-                        )}
-                        <Button size="sm" variant="outline-primary" onClick={() => handleAttend(row)}>
-                            Atender
-                        </Button>
-                        <Button size="sm" variant="outline-danger" onClick={() => handleCancel(row.id)}>
-                            Cancelar
-                        </Button>
-                    </div>
-                )
-            },
-        },
-    ]
+    const filtered = statusFilter === 'all'
+        ? appointments
+        : appointments.filter((a) => a.status === statusFilter)
 
     return (
         <div>
@@ -142,15 +90,40 @@ export function VetAppointmentPage(props) {
                             <option value="cancelled">Cancelada</option>
                         </select>
                     </div>
-                    <Table
-                        columns={COLUMNS}
-                        rows={filtered}
-                        rowKey="id"
-                        striped
-                        hover
-                        responsive
-                        emptyText="No hay citas registradas."
-                    />
+
+                    <Table striped hover responsive>
+                        <thead>
+                            <tr>
+                                <th>Dueño</th>
+                                <th>Mascota</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filtered.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} className="text-center text-body-secondary py-4">
+                                        No hay citas registradas.
+                                    </td>
+                                </tr>
+                            ) : (
+                                filtered.map((app) => (
+                                    <AppointmentRow
+                                        key={app.id}
+                                        appointment={app}
+                                        pet={app.pet}
+                                        showOwner={true} /* El Vet sí ve al dueño */
+                                        onConfirm={handleConfirm}
+                                        onAttend={handleAttend} /* Botón extra para el Vet */
+                                        onCancel={handleCancel}
+                                    />
+                                ))
+                            )}
+                        </tbody>
+                    </Table>
                 </Card.Body>
             </Card>
         </div>

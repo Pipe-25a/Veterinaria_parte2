@@ -1,9 +1,3 @@
-// Molécula: una fila de la tabla de citas.
-// Los botones de acción solo aparecen si llegan los handlers por props.
-// Molécula: una fila de la tabla de citas.
-// Recibe la cita en el esquema real del servicio (fecha/hora/tipo/estado/duenoEmail)
-// y la mascota ya resuelta por prop (nombre/especie). No consulta servicios.
-// Los botones de acción solo aparecen si llegan los handlers por props.
 import { TableCell } from '../atoms/TableCell'
 import { Button } from '../atoms/Button'
 import { SpeciesBadge } from '../atoms/SpeciesBadge'
@@ -13,56 +7,70 @@ import { formatDate } from '../../utils/formatDate'
 export function AppointmentRow(props) {
     const appointment = props.appointment
     const pet = props.pet ?? props.mascota
-    const hasActions = props.onConfirm || props.onReschedule || props.onCancel
     const status = appointment?.status ?? appointment?.estado
+
+    // Si el estado está cerrado, no mostramos acciones
     const isClosed = status === 'cancelled' || status === 'cancelada'
-    const petName = pet?.name ?? pet?.nombre ?? '—'
-    const petSpecies = pet?.species ?? pet?.especie
-    const appointmentType = appointment?.type ?? appointment?.tipo
-    const appointmentDate = appointment?.date ?? appointment?.fecha
-    const appointmentTime = appointment?.time ?? appointment?.hora
+    const isConfirmed = status === 'confirmed' || status === 'confirmada'
+
+    // Datos de la mascota
+    const petName = pet?.name ?? pet?.nombre ?? appointment?.petName ?? '—'
+    const petSpecies = pet?.species ?? pet?.especie ?? appointment?.petSpecies
 
     return (
         <tr>
-            {props.showOwner && <TableCell>{appointment?.duenoEmail}</TableCell>}
+            {/* Mostrar dueño solo si se pide explícitamente (útil para la vista del Vet) */}
+            {props.showOwner && <TableCell>{appointment?.duenoEmail ?? appointment?.duenoName}</TableCell>}
+
             <TableCell>
                 {petName}{' '}
                 {petSpecies && <SpeciesBadge species={petSpecies} />}
             </TableCell>
-            <TableCell>{appointmentType}</TableCell>
+
+            <TableCell>{appointment?.type ?? appointment?.tipo}</TableCell>
+
             <TableCell>
-                {formatDate(appointmentDate)} {appointmentTime}
+                {formatDate(appointment?.date ?? appointment?.fecha)} {appointment?.time ?? appointment?.hora}
             </TableCell>
+
             <TableCell>
                 <AppointmentStatusBadge status={status} />
             </TableCell>
-            {hasActions && (
+
+            {/* Columna de acciones (solo si hay handlers) */}
+            {(props.onConfirm || props.onReschedule || props.onCancel || props.onAttend) && (
                 <TableCell className="text-nowrap">
-                    {!isClosed && (
+                    {isClosed ? (
+                        <span className="text-muted">—</span>
+                    ) : (
                         <div className="d-flex flex-wrap gap-1">
-                            {status !== 'confirmed' && status !== 'confirmada' && (
-                                <Button
-                                    size="sm"
-                                    variant="success"
-                                    onClick={() => props.onConfirm(appointment.id)}
-                                >
+                            {/* Botón Confirmar */}
+                            {props.onConfirm && !isConfirmed && (
+                                <Button size="sm" variant="success" onClick={() => props.onConfirm(appointment.id)}>
                                     Confirmar
                                 </Button>
                             )}
-                            <Button
-                                size="sm"
-                                variant="outline-primary"
-                                onClick={() => props.onReschedule(appointment.id)}
-                            >
-                                Reagendar
-                            </Button>
-                            <Button
-                                size="sm"
-                                variant="outline-danger"
-                                onClick={() => props.onCancel(appointment.id)}
-                            >
-                                Cancelar
-                            </Button>
+
+                            {/* Botón Atender (Exclusivo del Vet) */}
+                            {props.onAttend && (
+                                <Button size="sm" variant="outline-primary" onClick={() => props.onAttend(appointment)}>
+                                    Atender
+                                </Button>
+                            )}
+
+                            {/* Botón Reagendar */}
+                            {props.onReschedule && (
+                                <Button size="sm" variant="outline-primary" onClick={() => props.onReschedule(appointment)}>
+                                    Reagendar
+                                </Button>
+                            )}
+
+                            {/* Botón Cancelar */}
+                            {props.onCancel && (
+                                <Button size="sm" variant="outline-danger" onClick={() => props.onCancel(appointment.id)}>
+                                    Cancelar
+                                </Button>
+                            )}
                         </div>
                     )}
                 </TableCell>
