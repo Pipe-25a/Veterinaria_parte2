@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react' // <-- Agrega esto
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { ROLE_HOME } from './data/roles'
 import { HomePage } from './pages/HomePage'
@@ -8,6 +9,19 @@ import { DuenoDashboard } from './pages/dueno/DuenoDashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AppointmentPage } from './pages/AppointmentPage'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
+import { VetDashboard } from './pages/vet/VetDashboard'
+
+function Logout() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    logout();
+    navigate('/', { replace: true });
+  }, [logout, navigate]);
+
+  return null; // No renderiza nada, solo hace la acción
+}
 
 export function App() {
   const { user } = useAuth()
@@ -58,6 +72,16 @@ export function App() {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/vet/*"
+        element={
+          <ProtectedRoute roles={['vet']}>
+            <VetDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/logout" element={<Logout />} />
 
       {/* Si la ruta no existe, lo mandamos al inicio público */}
       <Route path="*" element={<Navigate to="/" replace />} />

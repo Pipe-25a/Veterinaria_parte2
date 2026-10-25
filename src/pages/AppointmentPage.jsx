@@ -25,7 +25,7 @@ export function AppointmentPage() {
             (p) => (p.name || p.nombre || '').toLowerCase() === data.petName.trim().toLowerCase()
         )
 
-        // ✅ NUEVO: si la mascota no existe, la creamos automáticamente
+        //  NUEVO: si la mascota no existe, la creamos automáticamente
         if (!pet) {
             const created = addPet({
                 duenoEmail: user.email,

@@ -17,6 +17,8 @@ const SPECIES = [
     { value: 'cat', label: 'Gato' },
     { value: 'rabbit', label: 'Conejo' },
     { value: 'bird', label: 'Ave' },
+    { value: 'turtle', label: 'Tortuga' },
+    { value: 'others', label: 'Otros' },
 ]
 
 export function AppointmentForm(props) {
