@@ -20,3 +20,8 @@ Enlace Drive:
 
 https://drive.google.com/drive/folders/1bQMZCoULri2liXQnUvDPBbBA5K7PP70d?usp=drive_link
 
+Nombre de github:
+
+Pipe-25a asignado a Felipe Perez
+Felipe-Droguett-Q asignado a Felipe Droguett
+Ubuntu asignado a Felipe Droguett
