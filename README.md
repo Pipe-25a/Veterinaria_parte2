@@ -13,7 +13,7 @@ Estructura del proyecto: el árbol de carpetas de src organizado por Atomic Desi
 
 Tecnologías utilizadas: React, Vite, React Bootstrap 
 
-Cómo ejecutar el proyecto: los comandos exactos, npm install y npm run dev 
+Cómo ejecutar el proyecto: los comandos exactos, npm install, npm run dev, npm audit, npm audit fix, npm run test:run, npm run test 
 
 
 Enlace Drive:
