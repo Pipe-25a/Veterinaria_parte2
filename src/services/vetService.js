@@ -1,6 +1,5 @@
-import { INITIAL_APPOINTMENTS, INITIAL_RECORDS, INITIAL_HISTORY } from '../data/vetData'
+import { INITIAL_RECORDS, INITIAL_HISTORY } from '../data/vetData'
 
-const KEY_APPOINTMENTS = 'vet_appointments'
 const KEY_RECORDS = 'vet_records'
 const KEY_HISTORY = 'vet_history'
 
@@ -19,15 +18,6 @@ function load(key, initial) {
 
 function save(key, data) {
     localStorage.setItem(key, JSON.stringify(data))
-}
-
-// --- Appointments ---
-export function getVetAppointments() {
-    return load(KEY_APPOINTMENTS, INITIAL_APPOINTMENTS)
-}
-
-export function saveVetAppointments(appointments) {
-    save(KEY_APPOINTMENTS, appointments)
 }
 
 // --- Records (fichas) ---

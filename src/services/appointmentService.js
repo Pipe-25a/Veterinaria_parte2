@@ -18,6 +18,32 @@ export const ESTADOS = {
   CANCELADA: 'cancelled',
 }
 
+const migrateLegacyVetAppointments = () => {
+  const legacy = localStorage.getItem('vet_appointments')
+  if (!legacy) return
+  try {
+    const old = JSON.parse(legacy)
+    if (!Array.isArray(old)) return
+
+    const current = readAppointments()
+    const existingIds = new Set(current.map((a) => a.id))
+
+    const migrated = old
+      .map(normalizeAppointment)
+      .filter((a) => a && !existingIds.has(a.id))
+
+    if (migrated.length > 0) {
+      saveAppointments([...current, ...migrated])
+    }
+    // Borramos la key legacy para no volver a migrar
+    localStorage.removeItem('vet_appointments')
+  } catch {
+    localStorage.removeItem('vet_appointments')
+  }
+}
+
+migrateLegacyVetAppointments()
+
 const readAppointments = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem('citas'))
@@ -107,4 +133,49 @@ export const getAllAppointments = () => {
   return appointments.sort((a, b) =>
     `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`)
   )
+}
+
+export const normalizeAppointment = (raw) => {
+  if (!raw || typeof raw !== 'object') return null
+
+  // 1. Resolver petId: si viene petId/mascotaId → usar; si viene pet/petName → buscar por nombre
+  let petId = raw.petId ?? raw.mascotaId
+  if (!petId && (raw.pet || raw.petName)) {
+    const petName = String(raw.pet ?? raw.petName).trim().toLowerCase()
+    const pets = readPetsSafe() // helper abajo
+    const found = pets.find(
+      (p) => (p.name || p.nombre || '').toLowerCase() === petName
+    )
+    if (found) petId = found.id
+  }
+
+  return {
+    id: raw.id,
+    duenoEmail: raw.duenoEmail ?? raw.duenoName ?? raw.nombreDueno ?? '',
+    petId: petId ?? null,
+    date: raw.date ?? raw.fecha ?? '',
+    time: raw.time ?? raw.hora ?? '',
+    type: raw.type ?? raw.tipo ?? '',
+    status: normalizeStatus(raw.status ?? raw.estado),
+    reason: raw.reason ?? raw.motivo ?? '',
+  }
+}
+
+const normalizeStatus = (status) => {
+  const map = {
+    pendiente: APPOINTMENT_STATUS.PENDING,
+    confirmada: APPOINTMENT_STATUS.CONFIRMED,
+    reagendada: APPOINTMENT_STATUS.RESCHEDULED,
+    cancelada: APPOINTMENT_STATUS.CANCELLED,
+  }
+  return map[status] ?? status ?? APPOINTMENT_STATUS.PENDING
+}
+
+// Import para evitar dependencia circular con petService
+const readPetsSafe = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem('pets') || localStorage.getItem('mascotas'))
+    if (Array.isArray(saved)) return saved
+  } catch { /* noop */ }
+  return []
 }
