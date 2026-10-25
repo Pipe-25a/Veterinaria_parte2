@@ -9,7 +9,6 @@ import servicesData from '../data/services.json'
 import contactData from '../data/contact.json'
 
 export function HomePage(props) {
-  // Respetamos tus props inyectables con fallback a los JSON
   const services = props.services ?? props.servicios ?? servicesData
   const contact = props.contact ?? props.contacto ?? contactData
   const location = useLocation()
@@ -25,8 +24,6 @@ export function HomePage(props) {
     <MainLayout>
       <div className="container py-4">
         <HomeTemplate
-          title={props.title ?? 'Inicio'}
-          subtitle={props.subtitle}
           actions={
             <>
               <HeroSection

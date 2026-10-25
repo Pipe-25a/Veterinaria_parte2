@@ -1,14 +1,22 @@
 import { usePageTitle } from "../../hooks/usePageTitle"
+import { Heading } from "../atoms/Heading"
+import { Text } from "../atoms/Text"
 
 export function HomeTemplate(props) {
   usePageTitle(props.title || 'Inicio')
 
   return (
     <div>
-      {/* Título y subtítulo dinámicos */}
+      {/* Título y subtítulo dinámicos usando los átomos */}
       <div className="mb-4">
-        <h2 className="fw-bold">{props.title}</h2>
-        {props.subtitle && <p className="text-muted fs-5">{props.subtitle}</p>}
+        <Heading level={1} className="h2 fw-bold mb-1">
+          {props.title}
+        </Heading>
+        {props.subtitle && (
+          <Text tone="muted" className="fs-5 mb-0">
+            {props.subtitle}
+          </Text>
+        )}
       </div>
 
       {/* Aquí se renderiza lo que le pasen en la prop actions */}
