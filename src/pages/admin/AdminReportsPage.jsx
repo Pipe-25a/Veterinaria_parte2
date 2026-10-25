@@ -4,13 +4,13 @@ import { CrudSection } from '../../components/organisms/CrudSection'
 import { useStoredList } from '../../hooks/useStoredList'
 import { adminReports } from '../../data/adminReports'
 import { formatDate } from '../../utils/formatDate'
-import { getAllUsers, deleteUser } from '../../services/userService' 
 
 const COLUMNS = [
     { key: 'name', header: 'Nombre del Reporte' },
     { key: 'createdAt', header: 'Fecha', render: (val) => formatDate(val) },
     { key: 'description', header: 'Descripción' },
     { key: 'reportedBy', header: 'Reportado por' },
+    { key: 'status', header: 'Estado' },
 ]
 
 const FIELDS = [
@@ -18,6 +18,16 @@ const FIELDS = [
     { name: 'createdAt', label: 'Fecha de Creación', type: 'date', required: true },
     { name: 'description', label: 'Descripción', required: true },
     { name: 'reportedBy', label: 'Reportado por', required: true },
+    {
+        name: 'status',
+        label: 'Estado',
+        required: true,
+        options: [
+            { value: 'Completado', label: 'Completado' },
+            { value: 'Pendiente', label: 'Pendiente' },
+            { value: 'En Revisión', label: 'En Revisión' },
+        ],
+    }
 ]
 
 export function AdminReportsPage() {

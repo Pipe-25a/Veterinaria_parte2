@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { AuthTemplate } from '../components/templates/AuthTemplate'
+import { PageHeader } from '../components/molecules/PageHeader'
 import { AppointmentForm } from '../components/organisms/AppointmentForm'
-import { Button } from '../components/atoms/Button'
 import { useAuth } from '../context/AuthContext'
 import { bookAppointment } from '../services/appointmentService'
 import { getPetsByDueno, addPet } from '../services/petService'
@@ -10,7 +9,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 export function AppointmentPage() {
     usePageTitle('Agendar cita')
 
-    const { user, logout } = useAuth()
+    const { user } = useAuth()
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const [loading, setLoading] = useState(false)
@@ -25,7 +24,7 @@ export function AppointmentPage() {
             (p) => (p.name || p.nombre || '').toLowerCase() === data.petName.trim().toLowerCase()
         )
 
-        //  NUEVO: si la mascota no existe, la creamos automáticamente
+        // Si la mascota no existe, la creamos automáticamente
         if (!pet) {
             const created = addPet({
                 duenoEmail: user.email,
@@ -64,26 +63,21 @@ export function AppointmentPage() {
     }
 
     return (
-        <AuthTemplate
-            title={`Bienvenido/a ${user?.name ?? ''}`}
-            subtitle="Ingrese los datos para agendar su cita"
-        >
-            <AppointmentForm
-                onSubmit={handleSubmit}
-                error={error}
-                success={success}
-                loading={loading}
+        <div>
+            <PageHeader
+                title={`Bienvenido/a ${user?.name ?? ''}`}
+                subtitle="Ingresa los datos para agendar tu cita"
             />
-            <div className="text-center mt-3">
-                <Button
-                    variant="link"
-                    size="sm"
-                    className="text-danger text-decoration-none fw-bold"
-                    onClick={logout}
-                >
-                    Cerrar sesión
-                </Button>
+            <div className="card shadow-sm">
+                <div className="card-body">
+                    <AppointmentForm
+                        onSubmit={handleSubmit}
+                        error={error}
+                        success={success}
+                        loading={loading}
+                    />
+                </div>
             </div>
-        </AuthTemplate>
+        </div>
     )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { PageHeader } from '../../components/molecules/PageHeader'
+import { Badge } from '../../components/atoms/Badge'
 import { Button } from '../../components/atoms/Button'
 import { Table } from '../../components/atoms/Tables'
 import { getVetRecords, getVetHistory } from '../../services/vetService'
@@ -70,8 +71,14 @@ export function VetReportsPage() {
     ]
 
     // 3. Próximas citas (datos reales)
+    const STATUS_LABELS = {
+        pending: 'Pendiente',
+        confirmed: 'Confirmada',
+        rescheduled: 'Reagendada',
+    }
+
     const upcoming = appointments
-        .filter((c) => c.status !== 'cancelled' && c.status !== 'confirmed')
+        .filter((c) => c.status !== 'cancelled' && c.status !== 'cancelada') //  solo excluye canceladas
         .sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`))
         .slice(0, 10)
         .map((c) => ({
@@ -81,7 +88,7 @@ export function VetReportsPage() {
             type: c.type,
             date: c.date,
             time: c.time,
-            status: c.status === 'pending' ? 'Pendiente' : 'Confirmada',
+            status: STATUS_LABELS[c.status] || c.status, //  mapeo correcto
         }))
 
     const UPCOMING_COLUMNS = [
@@ -94,8 +101,8 @@ export function VetReportsPage() {
             key: 'status',
             header: 'Estado',
             render: (val) => {
-                const map = { Pendiente: 'warning', Confirmada: 'primary' }
-                return <span className={`badge bg-${map[val] || 'secondary'}`}>{val}</span>
+                const map = { Pendiente: 'warning', Confirmada: 'success', Reagendada: 'info' }
+                return <Badge tone={map[val] || 'neutral'}>{val}</Badge>
             },
         },
     ]

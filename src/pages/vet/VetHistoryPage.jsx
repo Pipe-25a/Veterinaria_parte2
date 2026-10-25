@@ -54,7 +54,7 @@ export function VetHistoryPage(props) {
             id: Date.now(),
             pet: formData.pet.trim(),
             species: formData.species,
-            dueno: formData.owner.trim(),
+            dueno: formData.dueno.trim(),
             type: formData.type,
             date: formData.date,
             vet: user?.name ?? 'Veterinario',

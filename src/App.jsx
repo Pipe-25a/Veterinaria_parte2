@@ -7,7 +7,6 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { DuenoDashboard } from './pages/dueno/DuenoDashboard'
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { AppointmentPage } from './pages/AppointmentPage'
 import { AdminDashboard } from './pages/admin/AdminDashboard'
 import { VetDashboard } from './pages/vet/VetDashboard'
 
@@ -53,16 +52,6 @@ export function App() {
           </ProtectedRoute>
         }
       />
-
-      <Route
-        path="/appointment"
-        element={
-          <ProtectedRoute roles={['dueno']}>
-            <AppointmentPage />
-          </ProtectedRoute>
-        }
-      />
-
       {/*  3. Agregamos la ruta protegida para el Admin */}
       <Route
         path="/admin/*"
