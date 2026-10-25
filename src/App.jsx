@@ -1,4 +1,5 @@
 import { useEffect } from 'react' // <-- Agrega esto
+import './App.css'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { ROLE_HOME } from './data/roles'
@@ -31,49 +32,52 @@ export function App() {
   const home = user ? (ROLE_HOME[user.role] ?? '/') : '/login'
 
   return (
-    <Routes>
-      {/* Página principal pública: SIEMPRE se muestra, esté logueado o no */}
-      <Route path="/" element={<HomePage />} />
+    // Diseño general (estilos en App.css), para TODAS las páginas
+    <div className="app-layout">
+      <Routes>
+        {/* Página principal pública: SIEMPRE se muestra, esté logueado o no */}
+        <Route path="/" element={<HomePage />} />
 
-      <Route
-        path="/login"
-        element={user ? <Navigate to={home} replace /> : <LoginPage />}
-      />
-      <Route
-        path="/register"
-        element={user ? <Navigate to={home} replace /> : <RegisterPage />}
-      />
+        <Route
+          path="/login"
+          element={user ? <Navigate to={home} replace /> : <LoginPage />}
+        />
+        <Route
+          path="/register"
+          element={user ? <Navigate to={home} replace /> : <RegisterPage />}
+        />
 
-      <Route
-        path="/dueno/*"
-        element={
-          <ProtectedRoute roles={['dueno']}>
-            <DuenoDashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/*  3. Agregamos la ruta protegida para el Admin */}
-      <Route
-        path="/admin/*"
-        element={
-          <ProtectedRoute roles={['admin']}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/dueno/*"
+          element={
+            <ProtectedRoute roles={['dueno']}>
+              <DuenoDashboard />
+            </ProtectedRoute>
+          }
+        />
+        {/*  3. Agregamos la ruta protegida para el Admin */}
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/vet/*"
-        element={
-          <ProtectedRoute roles={['vet']}>
-            <VetDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/logout" element={<Logout />} />
+        <Route
+          path="/vet/*"
+          element={
+            <ProtectedRoute roles={['vet']}>
+              <VetDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/logout" element={<Logout />} />
 
-      {/* Si la ruta no existe, lo mandamos al inicio público */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* Si la ruta no existe, lo mandamos al inicio público */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </div>
   )
 }
