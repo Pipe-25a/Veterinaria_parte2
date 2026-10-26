@@ -23,7 +23,8 @@ export function Navbar() {
     <nav className="navbar navbar-expand-lg bg-white sticky-top shadow-sm">
       <div className="container">
         <Link to="/" className="fs-5 fw-bold text-success text-decoration-none">
-          🐾 Veterinaria San Marcos
+          <img src="/logo.jpg" alt="" className="navbar-logo-img" />
+          Veterinaria San Marcos
         </Link>
 
         <button
