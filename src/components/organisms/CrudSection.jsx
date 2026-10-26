@@ -4,6 +4,7 @@ import { Button } from '../atoms/Button'
 import { Heading } from '../atoms/Heading'
 import { FormField } from '../molecules/FormField'
 import { Modal } from 'react-bootstrap'
+import { ConfirmModal } from '../molecules/ConfirmModal' // <-- IMPORTAMOS EL MODAL
 
 export function CrudSection(props) {
     const {
@@ -12,7 +13,7 @@ export function CrudSection(props) {
         rows,
         idKey = 'id',
         fields = [],
-        actions = [], 
+        actions = [],
         labels = {},
         onCreate,
         onUpdate,
@@ -23,7 +24,10 @@ export function CrudSection(props) {
     const [formData, setFormData] = useState({})
     const [isEditing, setIsEditing] = useState(false)
 
-    // Verificamos qué acciones tenemos permitidas Y si el handler existe
+    // --- ESTADOS PARA EL MODAL DE ELIMINACIÓN ---
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+    const [itemToDelete, setItemToDelete] = useState(null)
+
     const canCreate = actions.includes('create') && onCreate
     const canEdit = actions.includes('edit') && onUpdate
     const canDelete = actions.includes('delete') && onDelete
@@ -50,7 +54,20 @@ export function CrudSection(props) {
         setShow(false)
     }
 
-    // Columnas dinámicas: solo agregamos la columna "Acciones" si hay botones que mostrar
+    // --- LÓGICA DE ELIMINACIÓN CON MODAL ---
+    const handleDeleteClick = (row) => {
+        setItemToDelete(row[idKey]) // Guardamos el ID
+        setShowConfirmDelete(true)  // Mostramos el modal
+    }
+
+    const handleConfirmDelete = () => {
+        if (itemToDelete) {
+            onDelete(itemToDelete) // Ejecutamos la prop onDelete
+        }
+        setShowConfirmDelete(false)
+        setItemToDelete(null)
+    }
+
     const tableColumns = [...columns]
 
     if (canEdit || canDelete) {
@@ -68,11 +85,7 @@ export function CrudSection(props) {
                         <Button
                             size="sm"
                             variant="outline-danger"
-                            onClick={() => {
-                                if (window.confirm('¿Eliminar este registro?')) {
-                                    onDelete(row[idKey])
-                                }
-                            }}
+                            onClick={() => handleDeleteClick(row)} // <-- Llama a la nueva función
                         >
                             Eliminar
                         </Button>
@@ -95,6 +108,7 @@ export function CrudSection(props) {
 
             <Table columns={tableColumns} rows={rows} rowKey={idKey} striped hover responsive />
 
+            {/* Modal de Crear/Editar */}
             <Modal show={show} onHide={() => setShow(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{isEditing ? 'Editar' : 'Crear'} Registro</Modal.Title>
@@ -108,7 +122,7 @@ export function CrudSection(props) {
                                 name={f.name}
                                 label={f.label}
                                 type={f.type || 'text'}
-                                options={f.options} 
+                                options={f.options}
                                 value={formData[f.name] || ''}
                                 onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
                                 required={f.required}
@@ -121,6 +135,17 @@ export function CrudSection(props) {
                     </Modal.Footer>
                 </form>
             </Modal>
+
+            {/* NUEVO Modal de Eliminación (Usando props) */}
+            <ConfirmModal
+                show={showConfirmDelete}
+                onHide={() => setShowConfirmDelete(false)}
+                onConfirm={handleConfirmDelete}
+                title="Eliminar Registro"
+                message="¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer."
+                variant="danger"
+                confirmText="Sí, eliminar"
+            />
         </div>
     )
 }
