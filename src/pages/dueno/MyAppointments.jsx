@@ -3,10 +3,9 @@ import { useAuth } from '../../context/AuthContext'
 import { usePageTitle } from '../../hooks/usePageTitle'
 import { PageHeader } from '../../components/molecules/PageHeader'
 import { Table } from '../../components/atoms/Tables'
-import { Button } from '../../components/atoms/Button'
-import { Text } from '../../components/atoms/Text'
 import { RescheduleModal } from '../../components/molecules/RescheduleModal'
 import { AppointmentRow } from '../../components/molecules/AppointmentRow'
+import { ConfirmModal } from '../../components/molecules/ConfirmModal' // <-- IMPORTAMOS
 import {
     getAppointmentsByDueno,
     updateAppointmentStatus,
@@ -23,6 +22,10 @@ export function MyAppointments() {
 
     const [showReschedule, setShowReschedule] = useState(false)
     const [selectedApp, setSelectedApp] = useState(null)
+
+    // --- ESTADOS PARA EL MODAL DE CANCELACIÓN ---
+    const [showCancelModal, setShowCancelModal] = useState(false)
+    const [appToCancel, setAppToCancel] = useState(null)
 
     const refresh = () => {
         const list = getAppointmentsByDueno(user.email)
@@ -51,12 +54,24 @@ export function MyAppointments() {
         refresh()
     }
 
-    const handleCancel = (id) => {
-        if (!window.confirm('¿Cancelar esta cita?')) return
-        const result = updateAppointmentStatus(id, 'cancelled')
-        if (!result.ok) return setError(result.error)
-        setError('')
-        refresh()
+    // --- NUEVA LÓGICA DE CANCELACIÓN CON MODAL ---
+    const handleCancelClick = (id) => {
+        setAppToCancel(id)
+        setShowCancelModal(true)
+    }
+
+    const confirmCancel = () => {
+        if (appToCancel) {
+            const result = updateAppointmentStatus(appToCancel, 'cancelled')
+            if (!result.ok) {
+                setError(result.error)
+            } else {
+                setError('')
+                refresh()
+            }
+        }
+        setShowCancelModal(false)
+        setAppToCancel(null)
     }
 
     const openReschedule = (app) => {
@@ -78,7 +93,6 @@ export function MyAppointments() {
 
             {error && <div className="alert alert-danger">{error}</div>}
 
-            {/* Tabla controlada con children y AppointmentRow */}
             <Table striped hover responsive>
                 <thead>
                     <tr>
@@ -103,19 +117,31 @@ export function MyAppointments() {
                                 appointment={app}
                                 pet={getPetById(app.petId)}
                                 onConfirm={handleConfirm}
-                                onReschedule={openReschedule} /* Nota: le pasamos el objeto, no el id */
-                                onCancel={handleCancel}
+                                onReschedule={openReschedule}
+                                onCancel={handleCancelClick} // <-- Ahora llama a handleCancelClick
                             />
                         ))
                     )}
                 </tbody>
             </Table>
 
+            {/* Modal de Reagendar */}
             <RescheduleModal
                 show={showReschedule}
                 onHide={() => setShowReschedule(false)}
                 onConfirm={handleRescheduleConfirm}
                 appointment={selectedApp}
+            />
+
+            {/* NUEVO Modal de Cancelar (Reutilizando el componente con Props) */}
+            <ConfirmModal
+                show={showCancelModal}
+                onHide={() => setShowCancelModal(false)}
+                onConfirm={confirmCancel}
+                title="Cancelar Cita"
+                message="¿Estás seguro de que deseas cancelar esta cita? El horario quedará libre."
+                variant="warning"
+                confirmText="Sí, cancelar"
             />
         </>
     )

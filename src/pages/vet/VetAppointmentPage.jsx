@@ -3,6 +3,7 @@ import { PageHeader } from '../../components/molecules/PageHeader'
 import { Table } from '../../components/atoms/Tables'
 import { Card, Alert } from 'react-bootstrap'
 import { AppointmentRow } from '../../components/molecules/AppointmentRow'
+import { ConfirmModal } from '../../components/molecules/ConfirmModal' // <-- NUEVO IMPORT
 import { getAllAppointments, updateAppointmentStatus } from '../../services/appointmentService'
 import { getPetById } from '../../services/petService'
 import { sendToHistory } from '../../services/vetService'
@@ -16,6 +17,10 @@ export function VetAppointmentPage(props) {
     const [appointments, setAppointments] = useState([])
     const [statusFilter, setStatusFilter] = useState('all')
     const [message, setMessage] = useState({ text: '', type: '' })
+
+    // --- NUEVOS ESTADOS PARA EL MODAL DE CANCELACIÓN ---
+    const [showCancelModal, setShowCancelModal] = useState(false)
+    const [appToCancel, setAppToCancel] = useState(null)
 
     const loadAppointments = () => {
         if (props.appointments || props.citas) {
@@ -37,20 +42,43 @@ export function VetAppointmentPage(props) {
         loadAppointments()
     }
 
-    const handleCancel = (id) => {
-        if (!window.confirm('¿Cancelar esta cita?')) return
-        const r = updateAppointmentStatus(id, 'cancelled')
-        if (!r.ok) return setMessage({ text: r.error, type: 'danger' })
-        setMessage({ text: 'Cita cancelada.', type: 'success' })
-        loadAppointments()
+    // --- NUEVA LÓGICA DE CANCELACIÓN ---
+    const handleCancelClick = (id) => {
+        setAppToCancel(id)
+        setShowCancelModal(true)
+    }
+
+    const confirmCancel = () => {
+        if (appToCancel) {
+            const r = updateAppointmentStatus(appToCancel, 'cancelled')
+            if (!r.ok) {
+                setMessage({ text: r.error, type: 'danger' })
+            } else {
+                setMessage({ text: 'Cita cancelada.', type: 'success' })
+                loadAppointments()
+            }
+        }
+        setShowCancelModal(false)
+        setAppToCancel(null)
     }
 
     const handleAttend = (app) => {
-        // app es el objeto completo que nos manda AppointmentRow
+        // Traducimos especie (inglés a español) si viene del flujo del dueño
+        const speciesMap = {
+            dog: 'Perro',
+            cat: 'Gato',
+            rabbit: 'Conejo',
+            bird: 'Ave',
+            turtle: 'Tortuga',
+            others: 'Otro'
+        }
+        const rawSpecies = app.pet?.species ?? ''
+        const speciesEs = speciesMap[rawSpecies.toLowerCase()] || rawSpecies
+
         sendToHistory(
             {
                 pet: app.pet?.name ?? '—',
-                species: app.pet?.species ?? '',
+                species: speciesEs, // Usamos la traducida
                 duenoName: app.duenoEmail,
                 type: app.type,
                 date: app.date,
@@ -115,10 +143,10 @@ export function VetAppointmentPage(props) {
                                         key={app.id}
                                         appointment={app}
                                         pet={app.pet}
-                                        showOwner={true} /* El Vet sí ve al dueño */
+                                        showOwner={true}
                                         onConfirm={handleConfirm}
-                                        onAttend={handleAttend} /* Botón extra para el Vet */
-                                        onCancel={handleCancel}
+                                        onAttend={handleAttend}
+                                        onCancel={handleCancelClick} // <-- Ahora abre el Modal
                                     />
                                 ))
                             )}
@@ -126,6 +154,17 @@ export function VetAppointmentPage(props) {
                     </Table>
                 </Card.Body>
             </Card>
+
+            {/* --- NUEVO MODAL DE CANCELAR (Usando props) --- */}
+            <ConfirmModal
+                show={showCancelModal}
+                onHide={() => setShowCancelModal(false)}
+                onConfirm={confirmCancel}
+                title="Cancelar Cita"
+                message="¿Estás seguro de que deseas cancelar la cita de este paciente? El horario quedará libre."
+                variant="warning"
+                confirmText="Sí, cancelar cita"
+            />
         </div>
     )
 }

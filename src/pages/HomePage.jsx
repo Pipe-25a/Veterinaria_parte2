@@ -27,8 +27,8 @@ export function HomePage(props) {
           actions={
             <>
               <HeroSection
-                logoSrc={props.logoSrc ?? 'https://via.placeholder.com/150'}
-                logoAlt={props.logoAlt ?? 'Logo Clínica San Marcos'}
+                logoSrc="/logo.jpg"
+                logoAlt='Logo Clínica San Marcos'
                 title="Clínica Veterinaria"
                 subtitle="Bienvenidos a nuestra clínica San Marcos"
               />

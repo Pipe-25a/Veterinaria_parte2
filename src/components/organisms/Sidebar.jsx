@@ -2,31 +2,38 @@ import { NavLink, Link } from 'react-router-dom';
 
 export const Sidebar = ({ links }) => {
   return (
-    <nav className="nav flex-column nav-pills p-3 bg-light h-100">
-      {/* Links del menú */}
-      {links.map((l) => (
-        <NavLink
-          key={l.to}
-          to={l.to}
-          end={l.end}
-          className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-        >
-          {l.label}
-        </NavLink>
-      ))}
+    <nav className="nav flex-column p-3 h-100 sidebar-wrapper sidebar-container">
+      <div className="mb-4 px-2 sidebar-brand">
+        <img className="sidebar-logo-img" src="/logo.jpg" alt="Logo San Marcos" />
+        <h5 className="fw-bold mb-0">Panel de Control</h5>
+        <small className="opacity-50">Veterinaria</small>
+      </div>
 
-      <hr className="my-4 text-muted" />
+      <div className="flex-grow-1">
+        {links.map((l) => (
+          <NavLink
+            key={l.to}
+            to={l.to}
+            end={l.end}
+            className={({ isActive }) =>
+              `nav-link mb-2 sidebar-link ${isActive ? 'active' : ''}`
+            }
+          >
+            {l.label}
+          </NavLink>
+        ))}
+      </div>
 
-      <Link to="/" className="btn btn-outline-primary btn-sm">
-        Ir al sitio público
-      </Link>
+      <hr className="text-secondary opacity-25" />
 
-      <Link
-        to="/logout"
-        className="btn btn-outline-danger btn-sm mt-3"
-      >
-        Cerrar Sesión
-      </Link>
+      <div className="d-flex flex-column gap-2">
+        <Link to="/" className="btn btn-sm text-start btn-public">
+          🌐 Ir al sitio público
+        </Link>
+        <Link to="/logout" className="btn btn-sm text-start btn-logout">
+          🚪 Cerrar Sesión
+        </Link>
+      </div>
     </nav>
   );
 };
