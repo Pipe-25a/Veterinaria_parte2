@@ -12,6 +12,7 @@ export default defineConfig({
       include: ['src/utils/**', 'src/components/**', 'src/services/**'],
       reporter: ['text', 'html'],
       reportsDirectory: './coverage',
+      clean: false,
     },
   },
 })
