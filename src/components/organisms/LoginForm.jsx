@@ -6,13 +6,12 @@ import { useAuth } from '../../context/AuthContext'
 import { validationLogin } from '../../utils/validationLogin'
 
 export function LoginForm() {
-    const { login } = useAuth()
+    const { login, loading } = useAuth()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
     const [apiError, setApiError] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,16 +20,12 @@ export function LoginForm() {
         setErrors(newErrors)
         if (!isValid) return
 
-        setLoading(true)
-        const logged = login(email, password)
-        setLoading(false)
-
-        if (!logged) {
-            setApiError('Credenciales inválidas')
+        // Ya no es `const logged = login(...)`, ahora es await
+        const result = await login({ email, password })
+        if (!result.ok) {
+            setApiError(result.error)
             return
         }
-
-        // 👇 CAMBIO: En vez de ROLE_HOME, lo enviamos al Home público
         navigate('/')
     }
 
