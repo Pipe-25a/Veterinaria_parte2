@@ -13,10 +13,15 @@ Estructura del proyecto: el árbol de carpetas de src organizado por Atomic Desi
 
 Tecnologías utilizadas: React, Vite, React Bootstrap 
 
-Cómo ejecutar el proyecto: los comandos exactos, npm install y npm run dev 
+Cómo ejecutar el proyecto: los comandos exactos, npm install, npm run dev, npm audit, npm audit fix, npm run test:run, npm run test 
 
 
 Enlace Drive:
 
 https://drive.google.com/drive/folders/1bQMZCoULri2liXQnUvDPBbBA5K7PP70d?usp=drive_link
 
+Nombre de github:
+
+Pipe-25a asignado a Felipe Perez
+Felipe-Droguett-Q asignado a Felipe Droguett
+Ubuntu asignado a Felipe Droguett
