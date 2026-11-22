@@ -6,14 +6,13 @@ import { useAuth } from '../../context/AuthContext'
 import { validationRegister } from '../../utils/validationRegister'
 
 export function RegisterForm() {
-    const { register } = useAuth()
+    const { register, loading } = useAuth()
     const navigate = useNavigate()
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
     const [apiError, setApiError] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,16 +21,12 @@ export function RegisterForm() {
         setErrors(newErrors)
         if (!isValid) return
 
-        setLoading(true)
-        const result = register({ name, email, password })
-        setLoading(false)
-
+        // Agregamos el await
+        const result = await register({ name, email, password })
         if (!result.ok) {
             setApiError(result.error)
             return
         }
-
-        //  CAMBIO: En vez de ROLE_HOME, lo enviamos al Home público
         navigate('/')
     }
 
