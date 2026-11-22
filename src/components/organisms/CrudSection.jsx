@@ -18,6 +18,7 @@ export function CrudSection(props) {
         onCreate,
         onUpdate,
         onDelete,
+        error,
     } = props
 
     const [show, setShow] = useState(false)
@@ -44,14 +45,22 @@ export function CrudSection(props) {
         setShow(true)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // Llamamos a la función del padre y esperamos su respuesta
+        let result;
         if (isEditing) {
-            onUpdate(formData[idKey], formData)
+            result = await onUpdate(formData[idKey], formData)
         } else {
-            onCreate(formData)
+            result = await onCreate(formData)
         }
-        setShow(false)
+
+        // Si el resultado es exitoso, cerramos el modal
+        if (result && result.ok) {
+            setShow(false)
+        }
+        // Si da error, el modal NO se cierra (el error se muestra en la tabla de fondo)
     }
 
     // --- LÓGICA DE ELIMINACIÓN CON MODAL ---
@@ -115,6 +124,11 @@ export function CrudSection(props) {
                 </Modal.Header>
                 <form onSubmit={handleSubmit}>
                     <Modal.Body>
+                        {error && (
+                            <div className="alert alert-danger mb-3">
+                                {error}
+                            </div>
+                        )}
                         {fields.map((f) => (
                             <FormField
                                 key={f.name}
