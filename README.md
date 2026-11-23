@@ -20,6 +20,9 @@ Enlace Drive:
 
 https://drive.google.com/drive/folders/1bQMZCoULri2liXQnUvDPBbBA5K7PP70d?usp=drive_link
 
+Documento ERS
+https://docs.google.com/document/d/1jY-UkDmuShczW3CXWV9QWIMYjBf1RxH-/edit?usp=drive_link&ouid=116638462606022953048&rtpof=true&sd=true
+
 Nombre de github:
 
 Pipe-25a asignado a Felipe Perez
